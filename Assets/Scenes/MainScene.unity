@@ -377,6 +377,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &410344904 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1962557543666784589, guid: f675151d17b5d314aad0478ad22639a7, type: 3}
+  m_PrefabInstance: {fileID: 1962557544942440649}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &865541817
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,7 +755,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fdd8c0ec3238544482cc946cc1a03c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardFaces:
+  deck: []
+  <CardFaces>k__BackingField:
   - {fileID: 21300000, guid: 5edd54aed793c6345a5d8e3d0bb44b01, type: 3}
   - {fileID: 21300000, guid: d9a5ab15dace6b2469bb16712cae75af, type: 3}
   - {fileID: 21300000, guid: 25eb209edcb0ba749a0d48e7aae66323, type: 3}
@@ -803,8 +809,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8d45eaf5f67c41241917dd416a2219eb, type: 3}
   - {fileID: 21300000, guid: 040fdaacb1b3c4a4abc79014ef5951b7, type: 3}
   - {fileID: 21300000, guid: 543829c493437034e82b55092c673c30, type: 3}
-  cardPrefab: {fileID: 1962557543666784589, guid: f675151d17b5d314aad0478ad22639a7, type: 3}
-  bottomPos:
+  <CardPrefab>k__BackingField: {fileID: 410344904}
+  <BottomPos>k__BackingField:
   - {fileID: 1312783300}
   - {fileID: 2040049512}
   - {fileID: 1214573177}
@@ -812,13 +818,12 @@ MonoBehaviour:
   - {fileID: 1265020728}
   - {fileID: 1397807930}
   - {fileID: 1249777450}
-  topPos:
+  <TopPos>k__BackingField:
   - {fileID: 1169521125}
   - {fileID: 255632959}
   - {fileID: 1048427705}
   - {fileID: 1747212446}
-  parent: {fileID: 1390689780}
-  deck: []
+  <InPlayCardsParent>k__BackingField: {fileID: 1390689780}
 --- !u!4 &1112485556
 Transform:
   m_ObjectHideFlags: 0
@@ -2044,11 +2049,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1962557543666784590, guid: f675151d17b5d314aad0478ad22639a7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1962557543666784590, guid: f675151d17b5d314aad0478ad22639a7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1962557543666784590, guid: f675151d17b5d314aad0478ad22639a7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1962557543666784590, guid: f675151d17b5d314aad0478ad22639a7, type: 3}
       propertyPath: m_LocalPosition.x

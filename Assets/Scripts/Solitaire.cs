@@ -5,18 +5,31 @@ using UnityEngine;
 
 public class Solitaire : MonoBehaviour {
 
-    public List<Sprite> cardFaces = new List<Sprite>(52);
-    public GameObject cardPrefab;
-    public GameObject[] bottomPos;
-    public GameObject[] topPos;
+    [field: SerializeField]
+    public List<Sprite> CardFaces { get; set; } = new List<Sprite>(52);
+    [field: SerializeField]
+    public GameObject CardPrefab { get; set; }
+    [field: SerializeField]
+    public GameObject[] BottomPos { get; set; }
+    [field: SerializeField]
+    public GameObject[] TopPos { get; set; }
 
-    public GameObject parent;
+    [field: SerializeField]
+    public GameObject InPlayCardsParent { get; set; }
 
-    public static string[] suits = new string[] { "C", "D", "H", "S" };
-    public static string[] values = new string[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-    public List<string>[] bottoms;
-    public List<string>[] tops;
+    [field: SerializeField]
+    public static string[] Suits { get; set; } = new string[] { "C", "D", "H", "S" };
+    [field: SerializeField]
+    public static string[] Values { get; set; } = new string[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+    [field: SerializeField]
+    public List<string>[] Bottoms { get; set; }
+    [field: SerializeField]
+    public List<string>[] Tops { get; set; }
 
+    [field: SerializeField]
+    public List<string> Deck { get; set; }
+
+    // Actualmente se podrian sustituir por "new List<string>()" cuando se rellena Bottoms
     private List<string> bottom0 = new List<string>();
     private List<string> bottom1 = new List<string>();
     private List<string> bottom2 = new List<string>();
@@ -25,11 +38,10 @@ public class Solitaire : MonoBehaviour {
     private List<string> bottom5 = new List<string>();
     private List<string> bottom6 = new List<string>();
 
-    public List<string> deck;
 
     // Start is called before the first frame update
     void Start() {
-        bottoms = new List<string>[] { bottom0, bottom1, bottom2, bottom3, bottom4, bottom5, bottom6 };
+        Bottoms = new List<string>[] { bottom0, bottom1, bottom2, bottom3, bottom4, bottom5, bottom6 };
         PlayCards();
     }
 
@@ -39,11 +51,11 @@ public class Solitaire : MonoBehaviour {
     }
 
     public void PlayCards() {
-        deck = GenerateDeck();
-        deck = Shuffle(deck);
+        Deck = GenerateDeck();
+        Deck = Shuffle(Deck);
 
         // test the cards in the deck:
-        foreach(string card in deck) {
+        foreach(string card in Deck) {
             Debug.Log(card);
         }
 
@@ -54,8 +66,8 @@ public class Solitaire : MonoBehaviour {
     public static List<string> GenerateDeck() {
         List<string> newDeck = new List<string>();
 
-        foreach(string s in suits) {
-            foreach(string v in values) {
+        foreach(string s in Suits) {
+            foreach(string v in Values) {
                 newDeck.Add(s + v);
             }
         }
@@ -65,9 +77,7 @@ public class Solitaire : MonoBehaviour {
 
     public static List<string> Shuffle(List<string> deck) {
         System.Random rng = new System.Random();
-        deck = deck.OrderBy(_ => rng.Next()).ToList();
-
-        return deck;
+        return deck.OrderBy(_ => rng.Next()).ToList();
     }
 
     private IEnumerator SolitaireDeal() {
@@ -76,16 +86,16 @@ public class Solitaire : MonoBehaviour {
             float yOffset = 0;
             float zOffset = .03f;
 
-            Vector3 posInitial = bottomPos[i].transform.position;
-            foreach (string card in bottoms[i]) {
+            Vector3 posInitial = BottomPos[i].transform.position;
+            foreach (string card in Bottoms[i]) {
                 yield return new WaitForSeconds(0.05f);
-                GameObject newCard = Instantiate(cardPrefab,
+                GameObject newCard = Instantiate(CardPrefab,
                                                  new Vector3(posInitial.x, posInitial.y - yOffset, posInitial.z - zOffset),
                                                  Quaternion.identity,
-                                                 parent.transform);
+                                                 InPlayCardsParent.transform);
                 newCard.name = card;
-                if(card == bottoms[i][bottoms[i].Count -1]) {
-                    newCard.GetComponent<Selectable>().faceUp = true;
+                if(card == Bottoms[i][Bottoms[i].Count -1]) {
+                    newCard.GetComponent<Selectable>().FaceUp = true;
                 }
 
                 yOffset += .5f;
@@ -97,8 +107,8 @@ public class Solitaire : MonoBehaviour {
     private void SolitaireSort() {
         for (int i = 0; i < 7; i++) {
             for (int j = i; j < 7; j++) {
-                bottoms[j].Add(deck.Last<string>());
-                deck.RemoveAt(deck.Count - 1);
+                Bottoms[j].Add(Deck.Last<string>());
+                Deck.RemoveAt(Deck.Count - 1);
             }
         }
     }
