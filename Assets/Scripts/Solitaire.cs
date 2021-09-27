@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using UnityEngine;
 public class Solitaire : MonoBehaviour {
 
     [field: SerializeField]
-    public List<Sprite> CardFaces { get; set; } = new List<Sprite>(52);
+    public Sprite[] CardFaces { get; set; }
     [field: SerializeField]
     public GameObject CardPrefab { get; set; }
     [field: SerializeField]
@@ -20,10 +21,6 @@ public class Solitaire : MonoBehaviour {
     public GameObject InPlayCardsParent { get; set; }
 
     [field: SerializeField]
-    public static string[] Suits { get; set; } = new string[] { "C", "D", "H", "S" };
-    [field: SerializeField]
-    public static string[] Values { get; set; } = new string[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
-    [field: SerializeField]
     public List<string>[] Bottoms { get; set; }
     [field: SerializeField]
     public List<string>[] Tops { get; set; }
@@ -36,6 +33,9 @@ public class Solitaire : MonoBehaviour {
     public List<string> Deck { get; set; }
     [field: SerializeField]
     public List<string> DiscardPile { get; set; }
+
+    [field: SerializeField]
+    public List<GameObject> SelectedCards { get; set; } = new List<GameObject>();
 
     private int deckLocation;
     private int trips;
@@ -54,7 +54,12 @@ public class Solitaire : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         Bottoms = new List<string>[] { bottom0, bottom1, bottom2, bottom3, bottom4, bottom5, bottom6 };
+        FillCardFaces();
         PlayCards();
+    }
+
+    private void FillCardFaces() {
+        CardFaces = (Resources.LoadAll<Sprite>("Sprites/Cartas/CartasJugables"));
     }
 
     // Update is called once per frame
@@ -63,12 +68,13 @@ public class Solitaire : MonoBehaviour {
     }
 
     public void PlayCards() {
-        Deck = GenerateDeck();
+        Deck = GenerateDeckStr();
         Deck = Shuffle(Deck);
 
         // test the cards in the deck:
         foreach(string card in Deck) {
-            Debug.Log(card);
+            string color = (card.EndsWith("DI") || card.EndsWith("CO") ? "#FF7F7F" : "black");
+            Debug.LogFormat("<color=\"{0}\"><b>{1}</b></color>", color, card);
         }
 
         SolitaireSort();
@@ -76,14 +82,20 @@ public class Solitaire : MonoBehaviour {
         SortDeckIntoTrips();
     }
 
-    public static List<string> GenerateDeck() {
+    public static List<string> GenerateDeckStr() {
         List<string> newDeck = new List<string>();
 
-        foreach(string s in Suits) {
-            foreach(string v in Values) {
-                newDeck.Add(s + v);
+        foreach (EPalo p in Enum.GetValues(typeof(EPalo))) {
+            foreach (ERango r in Enum.GetValues(typeof(ERango))) {
+                newDeck.Add(new Carta(p, r).ToString());
             }
         }
+
+        //foreach (string p in Enum.GetNames(typeof(EPalo))) { 
+        //    foreach (object r in Enum.GetValues(typeof(ERango))) { 
+        //        newDeck.Add(r + p.Substring(0, 2));
+        //    }
+        //}
 
         return newDeck;
     }
@@ -107,7 +119,7 @@ public class Solitaire : MonoBehaviour {
                                                  Quaternion.identity,
                                                  InPlayCardsParent.transform);
                 newCard.name = card;
-                if(card == Bottoms[i][Bottoms[i].Count -1]) {
+                if(card == Bottoms[i][Bottoms[i].Count-1]) {
                     newCard.GetComponent<Selectable>().FaceUp = true;
                 }
 
