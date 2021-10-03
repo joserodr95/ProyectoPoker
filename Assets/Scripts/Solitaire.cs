@@ -30,7 +30,8 @@ public class Solitaire : MonoBehaviour {
     public List<List<string>> DeckTrips { get; set; } = new List<List<string>>();
 
     [field: SerializeField]
-    public List<string> Deck { get; set; }
+    public static Dictionary<string, DataCarta> MazoBase { get; set; }
+    private List<string> MazoEnJuego { get; set; }
     [field: SerializeField]
     public List<string> DiscardPile { get; set; }
 
@@ -54,12 +55,16 @@ public class Solitaire : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         Bottoms = new List<string>[] { bottom0, bottom1, bottom2, bottom3, bottom4, bottom5, bottom6 };
+        MazoBase = RellenaElMazo();
+        MazoEnJuego = new List<string>(MazoBase.Keys);
         FillCardFaces();
         PlayCards();
     }
 
     private void FillCardFaces() {
+        
         CardFaces = (Resources.LoadAll<Sprite>("Sprites/Cartas/CartasJugables"));
+
     }
 
     // Update is called once per frame
@@ -68,13 +73,12 @@ public class Solitaire : MonoBehaviour {
     }
 
     public void PlayCards() {
-        Deck = GenerateDeckStr();
-        Deck = Shuffle(Deck);
+        MazoBase = Barajea(MazoBase);
 
         // test the cards in the deck:
-        foreach(string card in Deck) {
-            string color = (card.EndsWith("DI") || card.EndsWith("CO") ? "#FF7F7F" : "black");
-            Debug.LogFormat("<color=\"{0}\"><b>{1}</b></color>", color, card);
+        foreach (KeyValuePair<string, DataCarta> card in MazoBase) {
+            string color = (card.Key.EndsWith("DI") || card.Key.EndsWith("CO") ? "#FF7F7F" : "black");
+            Debug.LogFormat("<color=\"{0}\"><b>{1}</b></color>", color, card.Key);
         }
 
         SolitaireSort();
@@ -82,27 +86,22 @@ public class Solitaire : MonoBehaviour {
         SortDeckIntoTrips();
     }
 
-    public static List<string> GenerateDeckStr() {
-        List<string> newDeck = new List<string>();
+    public static Dictionary<string, DataCarta> RellenaElMazo() {
+        Dictionary<string, DataCarta> nuevoMazo = new Dictionary<string, DataCarta>();
 
         foreach (EPalo p in Enum.GetValues(typeof(EPalo))) {
             foreach (ERango r in Enum.GetValues(typeof(ERango))) {
-                newDeck.Add(new Carta(p, r).ToString());
+                nuevoMazo.Add(new DataCarta(p, r).ToString(), new DataCarta(p, r));
             }
         }
 
-        //foreach (string p in Enum.GetNames(typeof(EPalo))) { 
-        //    foreach (object r in Enum.GetValues(typeof(ERango))) { 
-        //        newDeck.Add(r + p.Substring(0, 2));
-        //    }
-        //}
-
-        return newDeck;
+        return nuevoMazo;
     }
 
-    public static List<string> Shuffle(List<string> deck) {
+    public static Dictionary<string, DataCarta> Barajea(Dictionary<string, DataCarta> mazo) {
         System.Random rng = new System.Random();
-        return deck.OrderBy(_ => rng.Next()).ToList();
+        return mazo.OrderBy(r => rng.Next()).ToDictionary(cKVP => cKVP.Key, cKVP => cKVP.Value );
+         //mazo.OrderBy(_ => rng.Next()).ToList();
     }
 
     private IEnumerator SolitaireDeal() {
@@ -112,51 +111,61 @@ public class Solitaire : MonoBehaviour {
             float zOffset = .03f;
 
             Vector3 posInitial = BottomPos[i].transform.position;
-            foreach (string card in Bottoms[i]) {
+            foreach (string cartaStr in Bottoms[i]) {
                 yield return new WaitForSeconds(0.03f);
-                GameObject newCard = Instantiate(CardPrefab,
+                GameObject nuevaCarta = Instantiate(CardPrefab,
                                                  new Vector3(posInitial.x, posInitial.y - yOffset, posInitial.z - zOffset),
                                                  Quaternion.identity,
                                                  InPlayCardsParent.transform);
-                newCard.name = card;
-                if(card == Bottoms[i][Bottoms[i].Count-1]) {
-                    newCard.GetComponent<Selectable>().FaceUp = true;
+                nuevaCarta.name = cartaStr;
+                RellenaDataCarta(nuevaCarta);
+
+                if(cartaStr == Bottoms[i][Bottoms[i].Count-1]) {
+                    nuevaCarta.GetComponent<Selectable>().FaceUp = true;
                 }
 
                 yOffset += .5f;
                 zOffset += .03f;
-                DiscardPile.Add(card);
+                DiscardPile.Add(cartaStr);
             }
         }
 
         foreach (string card in DiscardPile) {
-            if (Deck.Contains(card)) {
-                Deck.Remove(card);
+            if (MazoBase.ContainsKey(card)) {
+                MazoBase.Remove(card);
             }
         }
         DiscardPile.Clear();
 
     }
 
+    private void RellenaDataCarta(GameObject carta) {
+        DataCarta dc = carta.GetComponent<DataCarta>();
+        MazoBase.TryGetValue(carta.name, out dc); // carta.GetComponent<DataCarta>();
+        //dc.name = carta.name;
+        dc.palo = dc.palo;
+        dc.rango = dc.rango;
+    }
+
     private void SolitaireSort() {
         for (int i = 0; i < 7; i++) {
             for (int j = i; j < 7; j++) {
-                Bottoms[j].Add(Deck.Last<string>());
-                Deck.RemoveAt(Deck.Count - 1);
+                Bottoms[j].Add(MazoEnJuego[MazoEnJuego.Count - 1]);
+                MazoEnJuego.Remove(MazoEnJuego[MazoEnJuego.Count - 1]);
             }
         }
     }
 
      private void SortDeckIntoTrips() {
-        trips = Deck.Count / 3;
-        tripsRemainder = Deck.Count % 3;
+        trips = MazoBase.Count / 3;
+        tripsRemainder = MazoBase.Count % 3;
         DeckTrips.Clear();
 
         int modifier = 0;
         for (int i = 0; i < trips; i++) {
             List<string> myTrips = new List<string>();
             for (int j = 0; j < 3; j++) {
-                myTrips.Add(Deck[j + modifier]);
+                myTrips.Add(MazoBase.ElementAt(j + modifier).Key);
             }
             DeckTrips.Add(myTrips);
             modifier += 3;
@@ -165,7 +174,7 @@ public class Solitaire : MonoBehaviour {
             List<string> myRemainders = new List<string>();
             modifier = 0;
             for (int k = 0; k < tripsRemainder; k++) {
-                myRemainders.Add(Deck[Deck.Count - tripsRemainder + modifier]);
+                myRemainders.Add(MazoBase.ElementAt(MazoBase.Count - tripsRemainder + modifier).Key);
                 modifier++;
             }
             DeckTrips.Add(myRemainders);
@@ -179,7 +188,7 @@ public class Solitaire : MonoBehaviour {
         // Add remaining cards to discard pile
         foreach (Transform child in DeckButton.transform) {
             if (child.CompareTag("Card")) {
-                Deck.Remove(child.name);
+                MazoBase.Remove(child.name);
                 DiscardPile.Add(child.name);
                  Destroy(child.gameObject);
             }
@@ -207,16 +216,16 @@ public class Solitaire : MonoBehaviour {
             deckLocation++;
         }
         else {
-            RestackTopDeck();
+            //RestackTopDeck();
         }
     }
 
-    private void RestackTopDeck() {
-        foreach (string card in DiscardPile) {
-            Deck.Add(card);
-        }
-        DiscardPile.Clear();
-        SortDeckIntoTrips();
-    }
+    //private void RestackTopDeck() {
+    //    foreach (string card in DiscardPile) {
+    //        Mazo.Add(card);
+    //    }
+    //    DiscardPile.Clear();
+    //    SortDeckIntoTrips();
+    //}
 
 }

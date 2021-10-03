@@ -15,18 +15,20 @@ public class UpdateSprite : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        List<string> deck = Solitaire.GenerateDeckStr();
+        List<string> deck = new List<string>(Solitaire.MazoBase.Keys);//Solitaire.RellenaElMazo();
         solitaire = FindObjectOfType<Solitaire>();
         userInput = FindObjectOfType<UserInput>();
 
-        int i = 0;
-        foreach (string card in deck) {
-            if (this.name == card) {
-                CardFace = solitaire.CardFaces[i];
-                break;
-            }
-            i++;
-        }
+        CardFace = Resources.Load<Sprite>("Sprites/Cartas/CartasJugables/" + this.name);//solitaire.CardFaces[i];
+
+        //int i = 0;
+        //foreach (string card in deck) {
+        //    //if (this.name == card) {
+        //        CardFace = Resources.Load<Sprite>("Sprites/Cartas/CartasJugables/" + card);//solitaire.CardFaces[i];
+        //        //break;
+        //    //}
+        //    i++;
+        //}
         spriteRenderer = GetComponent<SpriteRenderer>();
         selectable = GetComponent<Selectable>();
     }

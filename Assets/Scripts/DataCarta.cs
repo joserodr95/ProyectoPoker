@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Carta : MonoBehaviour {
+public class DataCarta : MonoBehaviour {
+    [SerializeField]
+    private string name = "";
+
     public EPalo palo;
     public ERango rango;
 
-    public Carta() { }
+    public DataCarta() { }
 
-    public Carta(EPalo palo, ERango rango) {
+    public DataCarta(EPalo palo, ERango rango) {
         this.palo = palo;
         this.rango = rango;
     }
@@ -23,7 +26,7 @@ public class Carta : MonoBehaviour {
     }
 
     public override string ToString() {
-        string name = "";
+        name = "";
 
         switch (rango) {
             case ERango.DOS:
