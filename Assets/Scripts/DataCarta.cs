@@ -2,9 +2,8 @@
 using UnityEngine;
 
 public class DataCarta : MonoBehaviour {
-    [SerializeField]
-    private string name = "";
 
+    public string name;
     public EPalo palo;
     public ERango rango;
 

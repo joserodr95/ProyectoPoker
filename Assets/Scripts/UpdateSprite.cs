@@ -15,7 +15,6 @@ public class UpdateSprite : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        List<string> deck = new List<string>(Solitaire.MazoBase.Keys);//Solitaire.RellenaElMazo();
         solitaire = FindObjectOfType<Solitaire>();
         userInput = FindObjectOfType<UserInput>();
 
