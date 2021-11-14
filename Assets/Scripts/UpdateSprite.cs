@@ -6,7 +6,7 @@ public class UpdateSprite : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     private Selectable selectable;
     private UserInput userInput;
-    private Solitaire solitaire;
+    //private Solitaire solitaire;
 
     [field: SerializeField]
     public Sprite CardFace { get; set; }
@@ -15,19 +15,11 @@ public class UpdateSprite : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        solitaire = FindObjectOfType<Solitaire>();
+        //solitaire = FindObjectOfType<Solitaire>();
         userInput = FindObjectOfType<UserInput>();
 
-        CardFace = Resources.Load<Sprite>("Sprites/Cartas/CartasJugables/" + this.name);//solitaire.CardFaces[i];
+        CardFace = Resources.Load<Sprite>("Sprites/Cartas/CartasJugables/" + this.name);
 
-        //int i = 0;
-        //foreach (string card in deck) {
-        //    //if (this.name == card) {
-        //        CardFace = Resources.Load<Sprite>("Sprites/Cartas/CartasJugables/" + card);//solitaire.CardFaces[i];
-        //        //break;
-        //    //}
-        //    i++;
-        //}
         spriteRenderer = GetComponent<SpriteRenderer>();
         selectable = GetComponent<Selectable>();
     }

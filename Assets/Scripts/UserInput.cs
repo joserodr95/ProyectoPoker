@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class UserInput : MonoBehaviour {
 
-    public GameObject slot1;
-    private Solitaire solitaire;
+    //public GameObject slot1;
+    //private Solitaire solitaire;
 
     // Start is called before the first frame update
     void Start() {
-        solitaire = FindObjectOfType<Solitaire>();
-        slot1 = this.gameObject;
+        //solitaire = FindObjectOfType<Solitaire>();
+        //slot1 = this.gameObject;
     }
 
     // Update is called once per frame
@@ -29,7 +29,7 @@ public class UserInput : MonoBehaviour {
                     DeckClickActions();
                 } else if (hit.collider.CompareTag("Card")) {
                     // Clicked card
-                    CardClickActions(hit.collider.gameObject);
+                    //CardClickActions(hit.collider.gameObject);
                 } else if (hit.collider.CompareTag("Top")) {
                     // Clicked top
                     TopClickActions();
@@ -47,9 +47,10 @@ public class UserInput : MonoBehaviour {
     private void DeckClickActions() {
         // Deck click actions
         Debug.Log("Deck clicked");
-        solitaire.DealFromDeck();
+        //solitaire.DealFromDeck();
     }
 
+    /*
     private void CardClickActions(GameObject go) {
         // Card click actions
         Debug.LogFormat("Card {0} clicked", go.name);
@@ -75,9 +76,12 @@ public class UserInput : MonoBehaviour {
                 solitaire.SelectedCards.Add(goSel.gameObject);
                 if (solitaire.SelectedCards.Count == 5) {
                     foreach (GameObject gameObject in solitaire.SelectedCards) {
+                        CartaComponente dcParaEliminar = gameObject.GetComponent<CartaComponente>();
+                        solitaire.Hileras[dcParaEliminar.hileraNum].cartas.RemoveAt(dcParaEliminar.posEnHilera);
                         Destroy(gameObject);
                     }
                     solitaire.SelectedCards.Clear();
+                    solitaire.RevelaCartasEnTopDeHileras();
                 }
             } else {
                 solitaire.SelectedCards.Remove(goSel.gameObject);
@@ -94,6 +98,7 @@ public class UserInput : MonoBehaviour {
                 // If the time is short enough then it is a double click
                     // If the card is eligible to fly up top then do it
     }
+    */
 
     private void TopClickActions() {
         // Top click actions

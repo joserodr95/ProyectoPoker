@@ -14,9 +14,12 @@ public class Selectable : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
         if (Selected) {
-            this.GetComponent<SpriteRenderer>().color = Color.yellow;
+
+            //this.GetComponent<SpriteRenderer>().color = Color.yellow;
+
+            this.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
+
         } else {
             if (FaceUp) {
                 this.GetComponent<SpriteRenderer>().color = Color.white;
