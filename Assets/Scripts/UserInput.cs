@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class UserInput : MonoBehaviour {
 
-    //public GameObject slot1;
-    //private Solitaire solitaire;
-
-    // Start is called before the first frame update
-    void Start() {
-        //solitaire = FindObjectOfType<Solitaire>();
-        //slot1 = this.gameObject;
-    }
-
     // Update is called once per frame
     void Update() {
         GetMouseClick();
+    }
+
+    public void MensajeDescartar () {
+        Debug.Log("Descartar");
     }
 
     private void GetMouseClick() {
@@ -29,7 +24,7 @@ public class UserInput : MonoBehaviour {
                     DeckClickActions();
                 } else if (hit.collider.CompareTag("Card")) {
                     // Clicked card
-                    //CardClickActions(hit.collider.gameObject);
+                    CardClickActions(hit.collider.gameObject);
                 } else if (hit.collider.CompareTag("Top")) {
                     // Clicked top
                     TopClickActions();
@@ -50,55 +45,18 @@ public class UserInput : MonoBehaviour {
         //solitaire.DealFromDeck();
     }
 
-    /*
     private void CardClickActions(GameObject go) {
         // Card click actions
         Debug.LogFormat("Card {0} clicked", go.name);
 
-        Solitaire solitaire = FindObjectOfType<Solitaire>();
         Selectable goSel = go.GetComponent<Selectable>();
 
-        // If the card clicked on is facedown
-        // If the card clicked on is not blocked
-        // Flip it over
-
-        // If the card clicked on is in the deck pile with the trips
-        // If it is not blocked
-        // Select it
-
-        // If the card is face up
-        // If there is no card currently selected
-        // Select the card
-
         if(goSel.FaceUp) {
+            // También podría ser: goSel.Selected = !goSel.Selected;
             goSel.Selected ^= true;
-            if (goSel.Selected) {
-                solitaire.SelectedCards.Add(goSel.gameObject);
-                if (solitaire.SelectedCards.Count == 5) {
-                    foreach (GameObject gameObject in solitaire.SelectedCards) {
-                        CartaComponente dcParaEliminar = gameObject.GetComponent<CartaComponente>();
-                        solitaire.Hileras[dcParaEliminar.hileraNum].cartas.RemoveAt(dcParaEliminar.posEnHilera);
-                        Destroy(gameObject);
-                    }
-                    solitaire.SelectedCards.Clear();
-                    solitaire.RevelaCartasEnTopDeHileras();
-                }
-            } else {
-                solitaire.SelectedCards.Remove(goSel.gameObject);
-            }
+            //go.GetComponent<CartaEnJuegoInfo>().indexEnMano;
         }
-
-            // If there is already a card selected AND it is not the same card
-                // If the new card is eligable to stack on the old card
-                    // Stack it
-                // Else
-                    // Select the new card
-
-            // Else If there is already a card selected an it is the same card
-                // If the time is short enough then it is a double click
-                    // If the card is eligible to fly up top then do it
     }
-    */
 
     private void TopClickActions() {
         // Top click actions
