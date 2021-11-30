@@ -5,78 +5,53 @@ using UnityEngine;
 public class PokerManager : MonoBehaviour
 {
     [field: SerializeField]
-    public GameObject CartaPrefab { get; set; }
+    public GameObject CardPrefab { get; set; }
 
     [SerializeField]
-    public ConjuntoCartas baraja = new ConjuntoCartas();
+    public CardsGroup deck = new CardsGroup();
     [SerializeField]
-    public ConjuntoCartas cartasDescartadas = new ConjuntoCartas();
+    public CardsGroup discartedCards = new CardsGroup();
 
     [SerializeField]
-    public List<Jugador> jugadores = new List<Jugador>();
-
-    //[SerializeField]
-    //public ConjuntoCartas cartasJug01 = new ConjuntoCartas();
-    //[SerializeField]
-    //public ConjuntoCartas cartasJug02 = new ConjuntoCartas();
-    //[SerializeField]
-    //public ConjuntoCartas cartasJug03 = new ConjuntoCartas();
-    //[SerializeField]
-    //public ConjuntoCartas cartasJug04 = new ConjuntoCartas();
-
-    //private Transform[][] posicionesCartasJugadores = new Transform[4][];
-    //[SerializeField]
-    //public Transform[] posicionesCartasJugador01 = new Transform[5];
-    //[SerializeField]
-    //public Transform[] posicionesCartasJugador02 = new Transform[5];
-    //[SerializeField]
-    //public Transform[] posicionesCartasJugador03 = new Transform[5];
-    //[SerializeField]
-    //public Transform[] posicionesCartasJugador04 = new Transform[5];
+    public List<Player> players = new List<Player>();
 
     private void Start() {
-        jugadores.Add(new Jugador(1));
-        //posicionesCartasJugadores = new Transform[][] { posicionesCartasJugador01, posicionesCartasJugador02, posicionesCartasJugador03, posicionesCartasJugador04 };
+        players.Add(new Player(1));
 
-        baraja.RellenaMazoBasico();
-        baraja.Barajea();
-        ReparteCartas();
+        deck.FillBasicDeck();
+        deck.Shuffle();
+        DealCards();
     }
 
-    private void ReparteCartas() {
-        //cartasJug01 = baraja.RobaXCartas(baraja, 5);
-        //for (int i = 0; i < cartasJug01.cartas.Count; i++) {
-        //    GameObject cartaGO = Instantiate(CartaPrefab,
-        //                                        posicionesCartasJugador01[i].position,
-        //                                        Quaternion.identity,
-        //                                        posicionesCartasJugador01[i].parent);
-        //    CartaComponente cartaComponent = cartaGO.GetComponent<CartaComponente>();
-        //    cartaComponent.Inicializar(cartasJug01.cartas[i]);
-        //    cartaGO.GetComponent<Selectable>().FaceUp = true;
-        //    CartaEnJuegoInfo enJuegoInfo = cartaGO.AddComponent<CartaEnJuegoInfo>();
-        //    enJuegoInfo.indexEnMano = i;
-        //    enJuegoInfo.jugadorPropietario = 1;
-        //}
+    public Card DrawFromTopOfDeck() {
+        Card cardToDraw = deck.cards[0];
+        deck.cards.RemoveAt(0);
 
-        foreach (Jugador jugador in jugadores) {
-            jugador.mano = baraja.RobaXCartas(baraja, 5);
-            for (int carta = 0; carta < 5; carta++) {
-                ReparteCarta(jugador, carta);
+        return cardToDraw;
+    }
+
+    private void DealCards() {
+
+        foreach (Player player in players) {
+            player.hand = deck.DrawXCards(deck, 5);
+            for (int card = 0; card < 5; card++) {
+                DealCard(player, card);
             }
         }
     }
 
-    private void ReparteCarta(Jugador jugador, int indexEnMano) {
-        GameObject cartaGO = Instantiate(CartaPrefab,
-                                                jugador.posicionesCartas[indexEnMano],
+    private void DealCard(Player player, int indexAtHand) {
+        GameObject cardGO = Instantiate(CardPrefab,
+                                                player.cardsPositions[indexAtHand],
                                                 Quaternion.identity,
-                                                jugador.padreCartas);
-        CartaComponente cartaComponent = cartaGO.GetComponent<CartaComponente>();
-        cartaComponent.Inicializar(jugador.mano.cartas[indexEnMano]);
-        cartaGO.GetComponent<Selectable>().FaceUp = true;
-        CartaEnJuegoInfo enJuegoInfo = cartaGO.AddComponent<CartaEnJuegoInfo>();
-        enJuegoInfo.indexEnMano = indexEnMano;
-        enJuegoInfo.jugadorPropietario = jugador.asiento;
+                                                player.cardsParent);
+        CardComponent cardComponent = cardGO.GetComponent<CardComponent>();
+        player.ccHand.Add(cardComponent);
+        cardComponent.Init(player.hand.cards[indexAtHand]);
+        cardGO.GetComponent<Selectable>().FaceUp = true;
+        InGameCardInfo inGameInfo = cardGO.AddComponent<InGameCardInfo>();
+        inGameInfo.indexAtHand = indexAtHand;
+        inGameInfo.playerOwner = player.seat;
     }
     
 }

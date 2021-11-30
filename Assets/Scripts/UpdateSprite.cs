@@ -13,12 +13,16 @@ public class UpdateSprite : MonoBehaviour {
     [field: SerializeField]
     public Sprite CardBack { get; set; }
 
+    //public void ForceUpdateSprite() {
+    //    CardFace = Resources.Load<Sprite>("Sprites/Cards/PlayableCards/" + this.name);
+    //}
+
     // Start is called before the first frame update
     void Start() {
         //solitaire = FindObjectOfType<Solitaire>();
         userInput = FindObjectOfType<UserInput>();
 
-        CardFace = Resources.Load<Sprite>("Sprites/Cartas/CartasJugables/" + this.name);
+        CardFace = Resources.Load<Sprite>("Sprites/Cards/PlayableCards/" + this.name);
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         selectable = GetComponent<Selectable>();
@@ -31,5 +35,6 @@ public class UpdateSprite : MonoBehaviour {
         } else {
             spriteRenderer.sprite = CardBack;
         }
+        CardFace = Resources.Load<Sprite>("Sprites/Cards/PlayableCards/" + this.name);
     }
 }
