@@ -8,15 +8,16 @@ public class Player {
     internal int seat;
 
     [SerializeField]
-    internal CardsGroup hand = new CardsGroup();
+    private CardsGroup hand = new CardsGroup();
     [SerializeField]
     internal List<bool> toDiscard = new List<bool>(new bool[5]);
-
-    [SerializeField]
+    //[SerializeField]
     internal List<CardComponent> ccHand = new List<CardComponent>();
 
     internal Transform cardsParent;
     internal Vector3[] cardsPositions = new Vector3[5];
+
+    internal CardsGroup Hand { get => hand; set => hand = value; }
 
     public Player(int seat) {
 
@@ -30,8 +31,8 @@ public class Player {
                     new Vector3(-2.5f, 0f, 0f),
                     new Vector3(-1.25f, 0f, 0f),
                     new Vector3(0.00f, 0f, 0f),
-                    new Vector3(+2.5f, 0f, 0f),
                     new Vector3(+1.25f, 0f, 0f),
+                    new Vector3(+2.5f, 0f, 0f),
                 };
                 break;
             }

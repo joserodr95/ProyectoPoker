@@ -6,5 +6,4 @@ public class InGameCardInfo : MonoBehaviour
 {
     public int playerOwner;
     public int indexAtHand;
-    public bool toDiscard;
 }

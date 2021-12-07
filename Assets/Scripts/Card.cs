@@ -10,6 +10,18 @@ public class Card {
 
     public Card() { }
 
+    public Card(Card card) {
+        this.name = card.name;
+        this.suit = card.suit;
+        this.rank = card.rank;
+    }
+
+    public void UpdateCardValues(Card cardToUpdate, Card cardWithNewValues) {
+        cardToUpdate.name = cardWithNewValues.name;
+        cardToUpdate.suit = cardWithNewValues.suit;
+        cardToUpdate.rank = cardWithNewValues.rank;
+    }
+
     public Card(ESuit suit, ERank rank) {
         this.suit = suit;
         this.rank = rank;

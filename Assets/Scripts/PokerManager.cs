@@ -33,7 +33,7 @@ public class PokerManager : MonoBehaviour
     private void DealCards() {
 
         foreach (Player player in players) {
-            player.hand = deck.DrawXCards(deck, 5);
+            player.Hand = deck.DrawXCards(deck, 5);
             for (int card = 0; card < 5; card++) {
                 DealCard(player, card);
             }
@@ -47,7 +47,9 @@ public class PokerManager : MonoBehaviour
                                                 player.cardsParent);
         CardComponent cardComponent = cardGO.GetComponent<CardComponent>();
         player.ccHand.Add(cardComponent);
-        cardComponent.Init(player.hand.cards[indexAtHand]);
+        cardComponent.card = player.Hand.cards[indexAtHand];
+        cardComponent.name = player.Hand.cards[indexAtHand].ToString();
+        cardComponent.gameObject.name = player.Hand.cards[indexAtHand].ToString();
         cardGO.GetComponent<Selectable>().FaceUp = true;
         InGameCardInfo inGameInfo = cardGO.AddComponent<InGameCardInfo>();
         inGameInfo.indexAtHand = indexAtHand;
