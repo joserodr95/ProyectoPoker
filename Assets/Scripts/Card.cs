@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class Card {
-
+    
     public string name;
     public ESuit suit;
     public ERank rank;

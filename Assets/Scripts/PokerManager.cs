@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,5 +54,10 @@ public class PokerManager : MonoBehaviour
         inGameInfo.indexAtHand = indexAtHand;
         inGameInfo.playerOwner = player.seat;
     }
+    
+}
+
+public class ClaseDeMentira
+{
     
 }
