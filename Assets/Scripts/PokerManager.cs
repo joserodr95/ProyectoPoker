@@ -4,7 +4,7 @@ using UnityEngine;
 public class PokerManager : MonoBehaviour
 {
     [field: SerializeField]
-    public GameObject CardPrefab { get; set; }
+    private GameObject CardPrefab { get; set; } // DO NOT REMOVE SET
 
     [SerializeField]
     public CardsGroup deck = new CardsGroup();
@@ -15,7 +15,10 @@ public class PokerManager : MonoBehaviour
     public List<Player> players = new List<Player>();
 
     private void Start() {
-        players.Add(new Player(1));
+        for (int i = 1; i <= 4; i++)
+        {
+            players.Add(new Player(i));
+        }
 
         deck.FillBasicDeck();
         deck.Shuffle();
@@ -40,10 +43,15 @@ public class PokerManager : MonoBehaviour
     }
 
     private void DealCard(Player player, int indexAtHand) {
-        GameObject cardGO = Instantiate(CardPrefab,
-                                                player.cardsPositions[indexAtHand],
-                                                Quaternion.identity,
-                                                player.cardsParent);
+        Transform playerTransform = player.cardsParent.transform;
+        
+        GameObject cardGO = Instantiate(
+            CardPrefab,
+            playerTransform.position,
+            playerTransform.rotation,
+            player.cardsParent);
+        cardGO.transform.localPosition = player.cardsPositions[indexAtHand];
+        
         CardComponent cardComponent = cardGO.GetComponent<CardComponent>();
         player.ccHand.Add(cardComponent);
         cardComponent.card = player.Hand.cards[indexAtHand];
@@ -54,10 +62,5 @@ public class PokerManager : MonoBehaviour
         inGameInfo.indexAtHand = indexAtHand;
         inGameInfo.playerOwner = player.seat;
     }
-    
-}
-
-public class ClaseDeMentira
-{
     
 }

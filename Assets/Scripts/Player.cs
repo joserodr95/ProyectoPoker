@@ -15,7 +15,14 @@ public class Player {
     internal List<CardComponent> ccHand = new List<CardComponent>();
 
     internal Transform cardsParent;
-    internal Vector3[] cardsPositions = new Vector3[5];
+    internal Vector3[] cardsPositions = 
+        {
+            new Vector3(-2.5f, 0f, 0f),
+            new Vector3(-1.25f, 0f, 0f), 
+            new Vector3(0.00f, 0f, 0f),
+            new Vector3(+1.25f, 0f, 0f), 
+            new Vector3(+2.5f, 0f, 0f),
+        };
 
     internal CardsGroup Hand { get => hand; set => hand = value; }
 
@@ -25,19 +32,25 @@ public class Player {
         this.name = $"Player0{seat}";
         cardsParent = GameObject.Find(name).transform;
 
-        switch (seat) {
-            case 1: {
-                cardsPositions = new Vector3[5]{
-                    new Vector3(-2.5f, 0f, 0f),
-                    new Vector3(-1.25f, 0f, 0f),
-                    new Vector3(0.00f, 0f, 0f),
-                    new Vector3(+1.25f, 0f, 0f),
-                    new Vector3(+2.5f, 0f, 0f),
-                };
-                break;
-            }
-
-
-        }
+        // cardsPositions = seat switch
+        // {
+        //     1 => new Vector3[5]
+        //     {
+        //         new Vector3(-2.5f, 0f, 0f),
+        //         new Vector3(-1.25f, 0f, 0f), 
+        //         new Vector3(0.00f, 0f, 0f),
+        //         new Vector3(+1.25f, 0f, 0f), 
+        //         new Vector3(+2.5f, 0f, 0f),
+        //     },
+        //     2 => new Vector3[5]
+        //     {
+        //         new Vector3(-2.5f, 0f, 0f),
+        //         new Vector3(-1.25f, 0f, 0f), 
+        //         new Vector3(0.00f, 0f, 0f),
+        //         new Vector3(+1.25f, 0f, 0f), 
+        //         new Vector3(+2.5f, 0f, 0f),
+        //     },
+        //     _ => cardsPositions
+        // };
     }
 }

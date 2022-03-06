@@ -43,8 +43,11 @@ public class UserInput : MonoBehaviour {
         cardInfo = go.GetComponent<InGameCardInfo>();
 
         if (!seleccionable.FaceUp) return;
-        seleccionable.Selected = !seleccionable.Selected;
-        pokerManager.players[0].toDiscard[cardInfo.indexAtHand] = seleccionable.Selected;
+        if (cardInfo.playerOwner == 1)
+        {
+            seleccionable.Selected = !seleccionable.Selected;
+            pokerManager.players[0].toDiscard[cardInfo.indexAtHand] = seleccionable.Selected;
+        }
     }
 
     public void Discard() {

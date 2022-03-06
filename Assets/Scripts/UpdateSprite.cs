@@ -31,13 +31,9 @@ public class UpdateSprite : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (selectable.FaceUp) {
-            spriteRenderer.sprite = CardFace;
-        } else {
-            spriteRenderer.sprite = CardBack;
-        }
+        spriteRenderer.sprite = selectable.FaceUp ? CardFace : CardBack;
 
-        CardFace = Resources.Load<Sprite>("Sprites/Cards/PlayableCards/" + cardComponent.card.name);
+        CardFace = Resources.Load<Sprite>($"Sprites/Cards/PlayableCards/{cardComponent.card.name}");
         this.gameObject.name = cardComponent.card.name;
     }
 }
