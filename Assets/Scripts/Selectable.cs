@@ -38,19 +38,4 @@ public class Selectable : MonoBehaviour {
         
         _spriteRenderer.color = FaceUp ? Color.white : CustomColors.cardbackRed;
     }
-
-    // Update is called once per frame
-    // void Update() 
-    // {
-    //     if (Selected) 
-    //     {
-    //         this.GetComponent<SpriteRenderer>().color = CustomColors.halfTransparentWhite;
-    //         // this.GetComponent<Transform>().localPosition = new Vector3(this.GetComponent<Transform>().position.x, 1f, 0f);
-    //     } 
-    //     else
-    //     {
-    //         this.GetComponent<SpriteRenderer>().color = FaceUp ? Color.white : CustomColors.cardbackRed;
-    //         // this.GetComponent<Transform>().localPosition = new Vector3(this.GetComponent<Transform>().position.x, 0f, 0f);
-    //     }
-    // }
 }

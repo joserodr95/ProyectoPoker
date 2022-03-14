@@ -1,5 +1,5 @@
 using UnityEngine;
-using static  HandsCalculator;
+using static HandsCalculator;
 
 public class UserInput : MonoBehaviour {
 
@@ -63,7 +63,7 @@ public class UserInput : MonoBehaviour {
     }
 
     public void CheckHandValue() {
-        Debug.Log(CalculateHandRank(pokerManager.players[0].Hand));
+        Debug.Log(pokerManager.players[0].Hand.CalculateHandRank());
     }
 
 }

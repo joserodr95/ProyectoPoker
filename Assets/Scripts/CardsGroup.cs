@@ -10,16 +10,17 @@ using System.Linq;
 public class CardsGroup : IEnumerable, IComparer<Card> {
 
     public List<Card> cards = new List<Card>();
+    
+    private Random rng = new Random();
 
     /// <summary>
     /// Rellena un ConjuntoCartas con el mazo básico de 52 naipes.
     /// </summary>
     public void FillBasicDeck() {
-
-        Card carta;
         foreach (ESuit p in Enum.GetValues(typeof(ESuit))) {
-            foreach (ERank r in Enum.GetValues(typeof(ERank))) {
-                carta = new Card(p, r);
+            foreach (ERank r in Enum.GetValues(typeof(ERank)))
+            {
+                Card carta = new Card(p, r);
                 this.cards.Add(carta);
             }
         }
@@ -29,7 +30,6 @@ public class CardsGroup : IEnumerable, IComparer<Card> {
     /// Mezcla las cartas.
     /// </summary>
     public void Shuffle() {
-        Random rng = new Random();
         this.cards = this.cards.OrderBy(_ => rng.Next()).ToList();
     }
 
@@ -46,6 +46,36 @@ public class CardsGroup : IEnumerable, IComparer<Card> {
         return cartasRobadas;
     }
 
+    public CardsGroup SortCards(bool significantSort = false)
+    {
+        // Sorts the received group of cards
+        if (!significantSort)
+        {
+            CardsGroup cardsGroupSorted = new CardsGroup
+            {
+                cards
+                    = (cards.ConvertAll(c => new Card(c.suit, c.rank))
+                        .OrderBy(c => c.rank)
+                        .ThenBy(c => c.suit)
+                        .ToList())
+            };
+            return cardsGroupSorted;
+        }
+        else
+        {
+            CardsGroup cardsGroupSorted = new CardsGroup
+            {
+                cards
+                    = (cards.ConvertAll(c => new Card(c.suit, c.rank, c.hasSignificance))
+                        .OrderBy(c => c.hasSignificance)
+                        .ThenBy(c => c.rank)
+                        .ThenBy(c => c.suit)
+                        .ToList())
+            };
+            return cardsGroupSorted;
+        }
+    }
+    
     public void Sort() {
         this.cards.Sort();
     }
@@ -54,19 +84,24 @@ public class CardsGroup : IEnumerable, IComparer<Card> {
         return ((IEnumerable)cards).GetEnumerator();
     }
 
-    public int Compare(Card card1, Card card2) {
+    public int Compare(Card card1, Card card2)
+    {
         if (card1.rank > card2.rank) {
             return 1;
-        } else if (card1.rank < card2.rank) {
-            return -1;
-        } else {
-            if (card1.suit > card2.suit) {
-                return 1;
-            } else if (card1.suit < card2.suit) {
-                return -1;
-            } else {
-                return 0;
-            }
         }
+
+        if (card1.rank < card2.rank) {
+            return -1;
+        }
+
+        if (card1.suit > card2.suit) {
+            return 1;
+        }
+
+        if (card1.suit < card2.suit) {
+            return -1;
+        }
+
+        return 0;
     }
 }

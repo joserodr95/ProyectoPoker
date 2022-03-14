@@ -57,7 +57,15 @@ public class PokerManager : MonoBehaviour
         cardComponent.card = player.Hand.cards[indexAtHand];
         cardComponent.name = player.Hand.cards[indexAtHand].ToString();
         cardComponent.gameObject.name = player.Hand.cards[indexAtHand].ToString();
-        cardGO.GetComponent<Selectable>().FaceUp = true;
+        
+        // Muestra boca arriba las cartas del jugador real y boca abajo el resto,
+        // excepto en el editor de unity que están todas boca arriba
+        cardGO.GetComponent<Selectable>().FaceUp = false;
+        if (player.seat == 1) cardGO.GetComponent<Selectable>().FaceUp = true;
+#if UNITY_EDITOR
+        cardGO.GetComponent<Selectable>().FaceUp = true;  
+#endif
+        
         InGameCardInfo inGameInfo = cardGO.AddComponent<InGameCardInfo>();
         inGameInfo.indexAtHand = indexAtHand;
         inGameInfo.playerOwner = player.seat;

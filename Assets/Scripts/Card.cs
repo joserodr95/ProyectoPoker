@@ -6,28 +6,32 @@ public class Card {
     public string name;
     public ESuit suit;
     public ERank rank;
+    public bool hasSignificance;
 
-    public Card() { }
+    public Card() {}
 
     public Card(Card card) {
         this.name = card.name;
         this.suit = card.suit;
         this.rank = card.rank;
+        this.hasSignificance = card.hasSignificance;
     }
 
     public void UpdateCardValues(Card cardToUpdate, Card cardWithNewValues) {
         cardToUpdate.name = cardWithNewValues.name;
         cardToUpdate.suit = cardWithNewValues.suit;
         cardToUpdate.rank = cardWithNewValues.rank;
+        cardToUpdate.hasSignificance = cardWithNewValues.hasSignificance;
     }
 
-    public Card(ESuit suit, ERank rank) {
+    public Card(ESuit suit, ERank rank, bool hasSignificance = false) {
         this.suit = suit;
         this.rank = rank;
+        this.hasSignificance = hasSignificance;
         this.name = this.ToString();
     }
 
-    public override string ToString() {
+    public sealed override string ToString() {
         name = "";
 
         switch (rank) {
