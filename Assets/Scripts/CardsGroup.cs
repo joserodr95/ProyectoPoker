@@ -34,24 +34,31 @@ public class CardsGroup : IEnumerable, IComparer<Card> {
     }
 
     /// <summary>
-    /// Elimina un número de cartas y lo devuelve
+    /// Remove a number of cards and returns them.
     /// </summary>
-    /// <returns>Las cartas eliminadas como ConjuntoCartas</returns>
-    public CardsGroup DrawXCards(CardsGroup fuenteDeRobo, int numCartasARobar) {
-        CardsGroup cartasRobadas = new CardsGroup {
-            cards = fuenteDeRobo.cards.GetRange(0, numCartasARobar)
+    /// <returns>The removed cards as a CardsGroup.</returns>
+    public CardsGroup DrawXCards(CardsGroup drawingPile, int nCardsToDraw) {
+        CardsGroup drawnCards = new CardsGroup {
+            cards = drawingPile.cards.GetRange(0, nCardsToDraw)
         };
-        fuenteDeRobo.cards.RemoveRange(0, numCartasARobar);
+        drawingPile.cards.RemoveRange(0, nCardsToDraw);
 
-        return cartasRobadas;
+        return drawnCards;
     }
 
+    /// <summary>
+    /// Sorts the cards.
+    /// </summary>
+    /// <param name="significantSort">If true it will sort the cards by hasSignificance too.</param>
+    /// <returns>The sorted cards as a CardsGroup.</returns>
     public CardsGroup SortCards(bool significantSort = false)
     {
+        CardsGroup cardsGroupSorted;
+            
         // Sorts the received group of cards
         if (!significantSort)
         {
-            CardsGroup cardsGroupSorted = new CardsGroup
+            cardsGroupSorted  = new CardsGroup()
             {
                 cards
                     = (cards.ConvertAll(c => new Card(c.suit, c.rank))
@@ -59,11 +66,10 @@ public class CardsGroup : IEnumerable, IComparer<Card> {
                         .ThenBy(c => c.suit)
                         .ToList())
             };
-            return cardsGroupSorted;
         }
         else
         {
-            CardsGroup cardsGroupSorted = new CardsGroup
+            cardsGroupSorted  = new CardsGroup()
             {
                 cards
                     = (cards.ConvertAll(c => new Card(c.suit, c.rank, c.hasSignificance))
@@ -72,12 +78,23 @@ public class CardsGroup : IEnumerable, IComparer<Card> {
                         .ThenBy(c => c.suit)
                         .ToList())
             };
-            return cardsGroupSorted;
         }
+        
+        UpdateAllCardsValues(cardsGroupSorted);
+
+        return cardsGroupSorted;
     }
-    
-    public void Sort() {
-        this.cards.Sort();
+
+    /// <summary>
+    /// Updates the values of all the cards.
+    /// </summary>
+    /// <param name="newValues">The cards with the new values.</param>
+    public void UpdateAllCardsValues(CardsGroup newValues)
+    {
+        for (int i = 0; i < newValues.cards.Count; i++)
+        {
+            this.cards[i].UpdateCardValues(newValues.cards[i]);
+        }
     }
 
     public IEnumerator GetEnumerator() {

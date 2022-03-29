@@ -13,6 +13,12 @@ public class PokerManager : MonoBehaviour
 
     [SerializeField]
     public List<Player> players = new List<Player>();
+    
+    [SerializeField]
+    public bool infiniteDeck = true;
+
+    [SerializeField] 
+    public bool revealCpuCards = true;
 
     private void Start() {
         for (int i = 1; i <= 4; i++)
@@ -25,8 +31,21 @@ public class PokerManager : MonoBehaviour
         DealCards();
     }
 
-    public Card DrawFromTopOfDeck() {
-        Card cardToDraw = deck.cards[0];
+    public Card DrawFromTopOfDeck()
+    {
+        Card cardToDraw;
+
+        if (infiniteDeck)
+        {
+            if (deck.cards.Count <= 0)
+            {
+                discartedCards.Shuffle();
+                deck.cards = new List<Card>(discartedCards.cards);
+                discartedCards.cards = new List<Card>();
+            }
+        }
+        
+        cardToDraw = deck.cards[0];
         deck.cards.RemoveAt(0);
 
         return cardToDraw;
@@ -45,30 +64,39 @@ public class PokerManager : MonoBehaviour
     private void DealCard(Player player, int indexAtHand) {
         Transform playerTransform = player.cardsParent.transform;
         
-        GameObject cardGO = Instantiate(
+        GameObject cardGo = Instantiate(
             CardPrefab,
             playerTransform.position,
             playerTransform.rotation,
             player.cardsParent);
-        cardGO.transform.localPosition = player.cardsPositions[indexAtHand];
+        cardGo.transform.localPosition = player.cardsPositions[indexAtHand];
         
-        CardComponent cardComponent = cardGO.GetComponent<CardComponent>();
+        CardComponent cardComponent = cardGo.GetComponent<CardComponent>();
         player.ccHand.Add(cardComponent);
         cardComponent.card = player.Hand.cards[indexAtHand];
         cardComponent.name = player.Hand.cards[indexAtHand].ToString();
         cardComponent.gameObject.name = player.Hand.cards[indexAtHand].ToString();
         
         // Muestra boca arriba las cartas del jugador real y boca abajo el resto,
-        // excepto en el editor de unity que están todas boca arriba
-        cardGO.GetComponent<Selectable>().FaceUp = false;
-        if (player.seat == 1) cardGO.GetComponent<Selectable>().FaceUp = true;
+        // excepto en el editor de unity que están todas boca arriba si se ha marcado así
+        cardGo.GetComponent<Selectable>().FaceUp = false;
+        if (player.seat == 1) cardGo.GetComponent<Selectable>().FaceUp = true;
 #if UNITY_EDITOR
-        cardGO.GetComponent<Selectable>().FaceUp = true;  
+        cardGo.GetComponent<Selectable>().FaceUp = revealCpuCards;  
 #endif
         
-        InGameCardInfo inGameInfo = cardGO.AddComponent<InGameCardInfo>();
+        InGameCardInfo inGameInfo = cardGo.AddComponent<InGameCardInfo>();
         inGameInfo.indexAtHand = indexAtHand;
         inGameInfo.playerOwner = player.seat;
     }
-    
+
+    /// <summary>
+    /// Adds a card to the discardPile.
+    /// </summary>
+    /// <param name="cardValuesToDiscard">The values of the new card that will be added to the discards.</param>
+    public void AddToDiscardPile(Card cardValuesToDiscard)
+    {
+        Card cardToAddToDiscard = new Card(cardValuesToDiscard.suit, cardValuesToDiscard.rank);
+        discartedCards.cards.Add(cardToAddToDiscard);
+    }
 }

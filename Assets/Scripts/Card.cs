@@ -17,11 +17,12 @@ public class Card {
         this.hasSignificance = card.hasSignificance;
     }
 
-    public void UpdateCardValues(Card cardToUpdate, Card cardWithNewValues) {
-        cardToUpdate.name = cardWithNewValues.name;
-        cardToUpdate.suit = cardWithNewValues.suit;
-        cardToUpdate.rank = cardWithNewValues.rank;
-        cardToUpdate.hasSignificance = cardWithNewValues.hasSignificance;
+    public void UpdateCardValues(Card cardWithNewValues)
+    {
+        this.name = cardWithNewValues.name;
+        this.suit = cardWithNewValues.suit;
+        this.rank = cardWithNewValues.rank;
+        this.hasSignificance = cardWithNewValues.hasSignificance;
     }
 
     public Card(ESuit suit, ERank rank, bool hasSignificance = false) {

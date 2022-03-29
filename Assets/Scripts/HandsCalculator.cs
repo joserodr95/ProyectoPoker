@@ -18,47 +18,32 @@ public static class HandsCalculator {
 
     public static EHandRanks CalculateHandRank(this CardsGroup cardsGroup) {
 
-        CardsGroup cardsGroupSorted = cardsGroup.SortCards();
+        cardsGroup.SortCards();
         EHandRanks resultHandRank = EHandRanks.HighCard;
 
-        for (int i = 0; i < 5; i++) {
-            cardsGroup.cards[i].UpdateCardValues
-                (
-                    cardsGroup.cards[i],
-                    cardsGroupSorted.cards[i]
-                );
-        }
-
-        if (CalculateRoyalStraightFlush(cardsGroupSorted.cards)) {
+        if (CalculateRoyalStraightFlush(cardsGroup.cards)) {
             resultHandRank = EHandRanks.RoyalStraightFlush;
-        } else if (CalculateStraightFlush(cardsGroupSorted.cards)) {
+        } else if (CalculateStraightFlush(cardsGroup.cards)) {
             resultHandRank = EHandRanks.StraightFlush;
-        } else if (CalculateFourOfKind(cardsGroupSorted.cards)) {
+        } else if (CalculateFourOfKind(cardsGroup.cards)) {
             resultHandRank = EHandRanks.FourOfKind;
-        } else if (CalculateFullHouse(cardsGroupSorted.cards)) {
+        } else if (CalculateFullHouse(cardsGroup.cards)) {
             resultHandRank = EHandRanks.FullHouse;
-        } else if (CalculateFlush(cardsGroupSorted.cards)) {
+        } else if (CalculateFlush(cardsGroup.cards)) {
             resultHandRank = EHandRanks.Flush;
-        } else if (CalculateStraight(cardsGroupSorted.cards)) {
+        } else if (CalculateStraight(cardsGroup.cards)) {
             resultHandRank = EHandRanks.Straight;
-        } else if (CalculateThreeOfKind(cardsGroupSorted.cards)) {
+        } else if (CalculateThreeOfKind(cardsGroup.cards)) {
             resultHandRank = EHandRanks.ThreeOfKind;
-        } else if (CalculateTwoPairs(cardsGroupSorted.cards)) {
+        } else if (CalculateTwoPairs(cardsGroup.cards)) {
             resultHandRank = EHandRanks.TwoPair;
-        } else if (CalculateOnePair(cardsGroupSorted.cards)) {
+        } else if (CalculateOnePair(cardsGroup.cards)) {
             resultHandRank = EHandRanks.OnePair;
         } else {
-            ApplySignificance(ref cardsGroupSorted.cards);    
+            ApplySignificance(ref cardsGroup.cards);    
         }
 
-        cardsGroupSorted = cardsGroupSorted.SortCards(true);
-        for (int i = 0; i < 5; i++) {
-            cardsGroup.cards[i].UpdateCardValues
-            (
-                cardsGroup.cards[i],
-                cardsGroupSorted.cards[i]
-            );
-        }
+        cardsGroup.SortCards(true);
 
         return resultHandRank;
     }
