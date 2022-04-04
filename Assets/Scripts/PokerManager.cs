@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class PokerManager : MonoBehaviour
 {
@@ -15,10 +18,10 @@ public class PokerManager : MonoBehaviour
     public List<Player> players = new List<Player>();
     
     [SerializeField]
-    public bool infiniteDeck = true;
+    private bool infiniteDeck;
 
     [SerializeField] 
-    public bool revealCpuCards = true;
+    private bool revealCpuCards;
 
     private void Start() {
         for (int i = 1; i <= 4; i++)
@@ -29,6 +32,23 @@ public class PokerManager : MonoBehaviour
         deck.FillBasicDeck();
         deck.Shuffle();
         DealCards();
+    }
+
+    private void OnValidate()
+    {
+        FlipCards();
+    }
+
+    private void FlipCards()
+    {
+        foreach (Player player in players)
+        {
+            foreach (CardComponent cc in player.ccHand)
+            {
+                if (player.seat == 1) continue;
+                cc.GetComponent<Selectable>().FaceUp = revealCpuCards;
+            }
+        }
     }
 
     public Card DrawFromTopOfDeck()
@@ -80,11 +100,11 @@ public class PokerManager : MonoBehaviour
         // Muestra boca arriba las cartas del jugador real y boca abajo el resto,
         // excepto en el editor de unity que están todas boca arriba si se ha marcado así
         cardGo.GetComponent<Selectable>().FaceUp = false;
+        #if UNITY_EDITOR
+                cardGo.GetComponent<Selectable>().FaceUp = revealCpuCards;  
+        #endif
         if (player.seat == 1) cardGo.GetComponent<Selectable>().FaceUp = true;
-#if UNITY_EDITOR
-        cardGo.GetComponent<Selectable>().FaceUp = revealCpuCards;  
-#endif
-        
+
         InGameCardInfo inGameInfo = cardGo.AddComponent<InGameCardInfo>();
         inGameInfo.indexAtHand = indexAtHand;
         inGameInfo.playerOwner = player.seat;

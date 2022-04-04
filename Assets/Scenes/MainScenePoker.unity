@@ -554,6 +554,8 @@ MonoBehaviour:
   discartedCards:
     cards: []
   players: []
+  infiniteDeck: 1
+  revealCpuCards: 0
 --- !u!114 &825133378
 MonoBehaviour:
   m_ObjectHideFlags: 0

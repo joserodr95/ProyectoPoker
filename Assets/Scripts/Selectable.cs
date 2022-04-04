@@ -1,9 +1,36 @@
 using UnityEngine;
 
-public class Selectable : MonoBehaviour {
-
+public class Selectable : MonoBehaviour
+{
+    
+    private readonly Vector3 _offSet = new Vector3(0f, 1f, 0f);
     [field: SerializeField]
-    public bool FaceUp { get; set; } = false;
+    private bool _faceUp;
+    [field: SerializeField]
+    private bool _selected;
+    private SpriteRenderer _spriteRenderer = null;
+    private Transform _transform;
+    
+    public bool FaceUp
+    {
+        get => _faceUp;
+        set
+        {
+            if (_spriteRenderer is object)
+            {
+                if (value)
+                {
+                    _spriteRenderer.color = Color.white;
+                }
+                else
+                {
+                    _spriteRenderer.color = CustomColor.cardbackRed;
+                }
+            }
+
+            _faceUp = value;
+        }
+    }
 
     public bool Selected
     {
@@ -12,30 +39,24 @@ public class Selectable : MonoBehaviour {
         {
             if (value)
             {
-                _spriteRenderer.color = CustomColors.halfTransparentWhite;
+                _spriteRenderer.color = CustomColor.halfTransparentWhite;
                 _transform.localPosition += _offSet;
             }
             else
             {
-                _spriteRenderer.color = FaceUp ? Color.white : CustomColors.cardbackRed;
+                _spriteRenderer.color = FaceUp ? Color.white : CustomColor.cardbackRed;
                 _transform.localPosition -= _offSet;
             }
 
             _selected = value;
-        } 
+        }
     }
     
-    private readonly Vector3 _offSet = new Vector3(0f, 1f, 0f);
-    [field: SerializeField]
-    private bool _selected = false;
-    private SpriteRenderer _spriteRenderer;
-    private Transform _transform;
-
-    void Start()
+    private void Start()
     {
-        _spriteRenderer = this.GetComponent<SpriteRenderer>();
-        _transform = this.GetComponent<Transform>();
-        
-        _spriteRenderer.color = FaceUp ? Color.white : CustomColors.cardbackRed;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _transform = GetComponent<Transform>();
+
+        _spriteRenderer.color = FaceUp ? Color.white : CustomColor.cardbackRed;
     }
 }
