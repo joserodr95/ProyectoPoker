@@ -123,14 +123,4 @@ public class UserInput : MonoBehaviour {
         }
     }
 
-    public void CheckHandValue() {
-        Debug.Log($"Player 1: {pokerManager.players[0].Hand.CalculateHandRank()}");
-        #if UNITY_EDITOR
-        for (int i = 1; i < 4; i++)
-        {
-            Debug.Log($"Player {i+1}: {pokerManager.players[i].Hand.CalculateHandRank()}");
-        }
-        #endif
-    }
-
 }

@@ -119,4 +119,11 @@ public class PokerManager : MonoBehaviour
         Card cardToAddToDiscard = new Card(cardValuesToDiscard.suit, cardValuesToDiscard.rank);
         discartedCards.cards.Add(cardToAddToDiscard);
     }
+    
+    public void CheckHandValue() {
+        for (int i = 0; i < 4; i++)
+        {
+            Debug.Log($"Player {i+1}: {players[i].Hand.CalculateHandRank()}");
+        }
+    }
 }
