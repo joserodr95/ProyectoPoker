@@ -11,15 +11,8 @@ public class UpdateSprite : MonoBehaviour {
     public Sprite CardFace { get; set; }
     [field: SerializeField]
     public Sprite CardBack { get; set; }
-
-
-    //public void ForceUpdateSprite() {
-    //    CardFace = Resources.Load<Sprite>("Sprites/Cards/PlayableCards/" + this.name);
-    //}
-
-    // Start is called before the first frame update
+    
     void Start() {
-        //solitaire = FindObjectOfType<Solitaire>();
         userInput = FindObjectOfType<UserInput>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();

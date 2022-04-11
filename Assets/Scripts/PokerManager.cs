@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class PokerManager : MonoBehaviour
 {
+    public static PokerManager Instance { get; private set; }
+
     [field: SerializeField]
-    private GameObject CardPrefab { get; set; } // DO NOT REMOVE SET
+    private GameObject CardPrefab { get; set; } // DO NOT REMOVE OR CHANGE SET
 
     [SerializeField]
     public CardsGroup deck = new CardsGroup();
@@ -16,14 +17,20 @@ public class PokerManager : MonoBehaviour
 
     [SerializeField]
     public List<Player> players = new List<Player>();
+
+    [SerializeField]
+    public List<Button> buttons = new List<Button>();
+    
+    [SerializeField] 
+    internal bool revealCpuCards;
     
     [SerializeField]
     private bool infiniteDeck;
 
-    [SerializeField] 
-    private bool revealCpuCards;
 
     private void Start() {
+        Instance = this;
+        
         for (int i = 1; i <= 4; i++)
         {
             players.Add(new Player(i));

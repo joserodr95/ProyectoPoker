@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using static HandsCalculator;
 
@@ -8,7 +9,7 @@ public class UserInput : MonoBehaviour {
     
     private Selectable seleccionable;
     private InGameCardInfo cardInfo;
-
+    private bool controlable = true;
     private Camera mCam;
 
     private void Start()
@@ -40,6 +41,8 @@ public class UserInput : MonoBehaviour {
         // Card click actions
         //Debug.LogFormat("Card {0} clicked", go.name);
 
+        if (!controlable) return;
+        
         seleccionable = go.GetComponent<Selectable>();
         cardInfo = go.GetComponent<InGameCardInfo>();
 
@@ -54,18 +57,33 @@ public class UserInput : MonoBehaviour {
     /// <summary>
     /// Discards your cards marked to discard or the non-significant cards for the CPU players.
     /// </summary>
-    public void Discard() {
+    public void StartDiscard() {
+        if(controlable) StartCoroutine(Discard());
+    }
+
+    private IEnumerator Discard()
+    {
+        pokerManager.buttons[0].interactable = controlable = false;
+        
+        //Print the time of when the function is first called.
+        Debug.Log("Started Coroutine at timestamp : " + Time.time);
 
         for (int pNum = 0; pNum < pokerManager.players.Count; pNum++)
         {
             Player player = pokerManager.players[pNum];
             CardsGroup pHand = player.Hand;
-
+            
+            yield return new WaitForSeconds(.5f);
+            
+            Debug.Log("Finished WaitForSeconds at timestamp : " + Time.time);
+            
             if (pNum == 0) RealPlayerDiscard(player, ref pHand);
-            else CpuPlayerDiscard(ref pHand);
+            else StartCoroutine(CpuPlayerDiscard(player, pHand));
         }
-    }
+        
 
+        pokerManager.buttons[0].interactable = controlable = true;
+    }
 
     private void RealPlayerDiscard(Player player, ref CardsGroup pHand)
     {
@@ -82,7 +100,7 @@ public class UserInput : MonoBehaviour {
         pHand.CalculateHandRank();
     }
     
-    private void CpuPlayerDiscard(ref CardsGroup pHand)
+    private IEnumerator CpuPlayerDiscard(Player player, CardsGroup pHand)
     {
         int numberOfLeftSideDiscards = NumberOfLeftCardsToDiscard(pHand.CalculateHandRank());
         
@@ -94,6 +112,13 @@ public class UserInput : MonoBehaviour {
             pHand.cards[i].UpdateCardValues(
                 pokerManager.DrawFromTopOfDeck()
             );
+            player.ccHand[i].GetComponent<Selectable>().Selected = true;
+        }
+
+        yield return new WaitForSeconds(.5f);
+        foreach (CardComponent cc in player.ccHand)
+        {
+            cc.GetComponent<Selectable>().Selected = false;
         }
         
         pHand.CalculateHandRank();

@@ -3,7 +3,8 @@ using UnityEngine;
 public class Selectable : MonoBehaviour
 {
     
-    private readonly Vector3 _offSet = new Vector3(0f, 1f, 0f);
+    private readonly Vector3 _offSetPlus = new Vector3(0f, 1f, 0f);
+    private readonly Vector3 _offSetMinus = new Vector3(0f, -1f, 0f);
     [field: SerializeField]
     private bool _faceUp;
     [field: SerializeField]
@@ -37,15 +38,19 @@ public class Selectable : MonoBehaviour
         get => _selected;
         set
         {
+            if (value == _selected) return;
+            
+            int playerNum = GetComponent<InGameCardInfo>().playerOwner;
+            
             if (value)
             {
-                _spriteRenderer.color = CustomColor.halfTransparentWhite;
-                _transform.localPosition += _offSet;
+                _spriteRenderer.color = playerNum == 1 || PokerManager.Instance.revealCpuCards ? CustomColor.halfTransparentWhite : CustomColor.cardbackRed;
+                _transform.localPosition += (playerNum == 1 || playerNum == 4) ? _offSetPlus : _offSetMinus;
             }
             else
             {
-                _spriteRenderer.color = FaceUp ? Color.white : CustomColor.cardbackRed;
-                _transform.localPosition -= _offSet;
+                _spriteRenderer.color = playerNum == 1 || PokerManager.Instance.revealCpuCards ? Color.white : CustomColor.cardbackRed;
+                _transform.localPosition -= (playerNum == 1 || playerNum == 4) ? _offSetPlus : _offSetMinus;
             }
 
             _selected = value;
