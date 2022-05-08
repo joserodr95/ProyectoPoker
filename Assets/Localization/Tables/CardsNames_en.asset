@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: CardsNames_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: bcbaf51b59a46ec4f8cdfcfcbc79f76d, type: 2}
+  m_Metadata:
+    m_Items:
+    - id: 0
+  m_TableData:
+  - m_Id: 1598699909120
+    m_Localized: Clubs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1899863519232
+    m_Localized: Diamonds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3623022014464
+    m_Localized: Hearts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3623038791680
+    m_Localized: Spades
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12689215631360
+    m_Localized: '{0:plural:Two|Twos}'
+    m_Metadata:
+      m_Items:
+      - id: 0
+  - m_Id: 12689215631361
+    m_Localized: '{0:plural:Three|Threes}'
+    m_Metadata:
+      m_Items:
+      - id: 0
+  - m_Id: 12689215631362
+    m_Localized: '{0:plural:Four|Fours}'
+    m_Metadata:
+      m_Items:
+      - id: 0
+  - m_Id: 12689219825664
+    m_Localized: '{0:plural:Five|Fives}'
+    m_Metadata:
+      m_Items:
+      - id: 0
+  - m_Id: 12689219825665
+    m_Localized: '{0:plural:Six|Sixes}'
+    m_Metadata:
+      m_Items:
+      - id: 0
+  - m_Id: 12689219825666
+    m_Localized: '{0:plural:Seven|Sevens}'
+    m_Metadata:
+      m_Items:
+      - id: 0
+  - m_Id: 12689219825667
+    m_Localized: '{0:plural:Eight|Eights}'
+    m_Metadata:
+      m_Items:
+      - id: 0
+  - m_Id: 12689219825668
+    m_Localized: '{0:plural:Nine|Nines}'
+    m_Metadata:
+      m_Items:
+      - id: 0
+  - m_Id: 12689219825669
+    m_Localized: '{0:plural:Ten|Tens}'
+    m_Metadata:
+      m_Items:
+      - id: 0
+  - m_Id: 12689219825670
+    m_Localized: '{0:plural:Jack|Jacks}'
+    m_Metadata:
+      m_Items:
+      - id: 0
+  - m_Id: 12689219825671
+    m_Localized: '{0:plural:Queen|Queens}'
+    m_Metadata:
+      m_Items:
+      - id: 0
+  - m_Id: 12689219825672
+    m_Localized: '{0:plural:King|Kings}'
+    m_Metadata:
+      m_Items:
+      - id: 0
+  - m_Id: 12689219825673
+    m_Localized: '{0:plural:Ace|Aces}'
+    m_Metadata:
+      m_Items:
+      - id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00b030708a0b000001b030708a0b000002b030708a0b000000b070708a0b000001b070708a0b000002b070708a0b000003b070708a0b000004b070708a0b000005b070708a0b000006b070708a0b000007b070708a0b000008b070708a0b000009b070708a0b0000

@@ -16,21 +16,21 @@ namespace Tests.PlayMode
         {
             _goodActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.CLUBS, ERank.JACK),
-                new Card(ESuit.CLUBS, ERank.AS),
-                new Card(ESuit.CLUBS, ERank.TEN),
-                new Card(ESuit.CLUBS, ERank.KING),
-                new Card(ESuit.CLUBS, ERank.QUEEN),
+                new Card(ESuit.Clubs, ERank.Jack),
+                new Card(ESuit.Clubs, ERank.Ace),
+                new Card(ESuit.Clubs, ERank.Ten),
+                new Card(ESuit.Clubs, ERank.King),
+                new Card(ESuit.Clubs, ERank.Queen),
             };
             Assert.AreEqual(EHandRanks.RoyalStraightFlush, _goodActualHand.CalculateHandRank());
             
             _badActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.HEARTS, ERank.JACK),
-                new Card(ESuit.CLUBS, ERank.AS),
-                new Card(ESuit.CLUBS, ERank.TEN),
-                new Card(ESuit.CLUBS, ERank.KING),
-                new Card(ESuit.CLUBS, ERank.QUEEN),
+                new Card(ESuit.Hearts, ERank.Jack),
+                new Card(ESuit.Clubs, ERank.Ace),
+                new Card(ESuit.Clubs, ERank.Ten),
+                new Card(ESuit.Clubs, ERank.King),
+                new Card(ESuit.Clubs, ERank.Queen),
             };
             Assert.AreNotEqual(EHandRanks.RoyalStraightFlush, _badActualHand.CalculateHandRank());
         }
@@ -41,21 +41,21 @@ namespace Tests.PlayMode
 
             _goodActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.HEARTS, ERank.TWO),
-                new Card(ESuit.HEARTS, ERank.AS),
-                new Card(ESuit.HEARTS, ERank.FIVE),
-                new Card(ESuit.HEARTS, ERank.FOUR),
-                new Card(ESuit.HEARTS, ERank.THREE),
+                new Card(ESuit.Hearts, ERank.Two),
+                new Card(ESuit.Hearts, ERank.Ace),
+                new Card(ESuit.Hearts, ERank.Five),
+                new Card(ESuit.Hearts, ERank.Four),
+                new Card(ESuit.Hearts, ERank.Three),
             };
             Assert.AreEqual(EHandRanks.StraightFlush, _goodActualHand.CalculateHandRank());
             
             _badActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.CLUBS, ERank.JACK),
-                new Card(ESuit.CLUBS, ERank.AS),
-                new Card(ESuit.CLUBS, ERank.TEN),
-                new Card(ESuit.CLUBS, ERank.KING),
-                new Card(ESuit.CLUBS, ERank.QUEEN),
+                new Card(ESuit.Clubs, ERank.Jack),
+                new Card(ESuit.Clubs, ERank.Ace),
+                new Card(ESuit.Clubs, ERank.Ten),
+                new Card(ESuit.Clubs, ERank.King),
+                new Card(ESuit.Clubs, ERank.Queen),
             };
             Assert.AreNotEqual(EHandRanks.StraightFlush, _badActualHand.CalculateHandRank());
         }
@@ -66,21 +66,21 @@ namespace Tests.PlayMode
 
             _goodActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.HEARTS, ERank.SIX),
-                new Card(ESuit.SPADES, ERank.FIVE),
-                new Card(ESuit.DIAMONDS, ERank.SIX),
-                new Card(ESuit.CLUBS, ERank.SIX),
-                new Card(ESuit.HEARTS, ERank.SIX),
+                new Card(ESuit.Hearts, ERank.Six),
+                new Card(ESuit.Spades, ERank.Five),
+                new Card(ESuit.Diamonds, ERank.Six),
+                new Card(ESuit.Clubs, ERank.Six),
+                new Card(ESuit.Hearts, ERank.Six),
             };
             Assert.AreEqual(EHandRanks.FourOfKind, _goodActualHand.CalculateHandRank());
             
             _badActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.HEARTS, ERank.SIX),
-                new Card(ESuit.DIAMONDS, ERank.SIX),
-                new Card(ESuit.CLUBS, ERank.SIX),
-                new Card(ESuit.HEARTS, ERank.FIVE),
-                new Card(ESuit.SPADES, ERank.FIVE),
+                new Card(ESuit.Hearts, ERank.Six),
+                new Card(ESuit.Diamonds, ERank.Six),
+                new Card(ESuit.Clubs, ERank.Six),
+                new Card(ESuit.Hearts, ERank.Five),
+                new Card(ESuit.Spades, ERank.Five),
             };
             Assert.AreNotEqual(EHandRanks.FourOfKind, _badActualHand.CalculateHandRank());
         }
@@ -91,21 +91,21 @@ namespace Tests.PlayMode
 
             _goodActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.DIAMONDS, ERank.SEVEN),
-                new Card(ESuit.SPADES, ERank.SIX),
-                new Card(ESuit.CLUBS, ERank.SIX),
-                new Card(ESuit.HEARTS, ERank.SIX),
-                new Card(ESuit.SPADES, ERank.SEVEN),
+                new Card(ESuit.Diamonds, ERank.Seven),
+                new Card(ESuit.Spades, ERank.Six),
+                new Card(ESuit.Clubs, ERank.Six),
+                new Card(ESuit.Hearts, ERank.Six),
+                new Card(ESuit.Spades, ERank.Seven),
             };
             Assert.AreEqual(EHandRanks.FullHouse, _goodActualHand.CalculateHandRank());
             
             _badActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.DIAMONDS, ERank.SIX),
-                new Card(ESuit.SPADES, ERank.SIX),
-                new Card(ESuit.CLUBS, ERank.SIX),
-                new Card(ESuit.HEARTS, ERank.SIX),
-                new Card(ESuit.SPADES, ERank.SEVEN),
+                new Card(ESuit.Diamonds, ERank.Six),
+                new Card(ESuit.Spades, ERank.Six),
+                new Card(ESuit.Clubs, ERank.Six),
+                new Card(ESuit.Hearts, ERank.Six),
+                new Card(ESuit.Spades, ERank.Seven),
             };
             Assert.AreNotEqual(EHandRanks.FullHouse, _badActualHand.CalculateHandRank());
         }
@@ -116,21 +116,21 @@ namespace Tests.PlayMode
 
             _goodActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.DIAMONDS, ERank.SEVEN),
-                new Card(ESuit.DIAMONDS, ERank.TWO),
-                new Card(ESuit.DIAMONDS, ERank.SIX),
-                new Card(ESuit.DIAMONDS, ERank.THREE),
-                new Card(ESuit.DIAMONDS, ERank.SEVEN),
+                new Card(ESuit.Diamonds, ERank.Seven),
+                new Card(ESuit.Diamonds, ERank.Two),
+                new Card(ESuit.Diamonds, ERank.Six),
+                new Card(ESuit.Diamonds, ERank.Three),
+                new Card(ESuit.Diamonds, ERank.Seven),
             };
             Assert.AreEqual(EHandRanks.Flush, _goodActualHand.CalculateHandRank());
             
             _badActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.DIAMONDS, ERank.THREE),
-                new Card(ESuit.DIAMONDS, ERank.FOUR),
-                new Card(ESuit.DIAMONDS, ERank.FIVE),
-                new Card(ESuit.DIAMONDS, ERank.SIX),
-                new Card(ESuit.DIAMONDS, ERank.SEVEN),
+                new Card(ESuit.Diamonds, ERank.Three),
+                new Card(ESuit.Diamonds, ERank.Four),
+                new Card(ESuit.Diamonds, ERank.Five),
+                new Card(ESuit.Diamonds, ERank.Six),
+                new Card(ESuit.Diamonds, ERank.Seven),
             };
             Assert.AreNotEqual(EHandRanks.Flush, _badActualHand.CalculateHandRank());
         }
@@ -141,21 +141,21 @@ namespace Tests.PlayMode
 
             _goodActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.DIAMONDS, ERank.FOUR),
-                new Card(ESuit.DIAMONDS, ERank.TWO),
-                new Card(ESuit.HEARTS, ERank.SIX),
-                new Card(ESuit.DIAMONDS, ERank.THREE),
-                new Card(ESuit.DIAMONDS, ERank.FIVE),
+                new Card(ESuit.Diamonds, ERank.Four),
+                new Card(ESuit.Diamonds, ERank.Two),
+                new Card(ESuit.Hearts, ERank.Six),
+                new Card(ESuit.Diamonds, ERank.Three),
+                new Card(ESuit.Diamonds, ERank.Five),
             };
             Assert.AreEqual(EHandRanks.Straight, _goodActualHand.CalculateHandRank());
             
             _badActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.DIAMONDS, ERank.FOUR),
-                new Card(ESuit.DIAMONDS, ERank.TWO),
-                new Card(ESuit.DIAMONDS, ERank.SIX),
-                new Card(ESuit.DIAMONDS, ERank.THREE),
-                new Card(ESuit.DIAMONDS, ERank.FIVE),
+                new Card(ESuit.Diamonds, ERank.Four),
+                new Card(ESuit.Diamonds, ERank.Two),
+                new Card(ESuit.Diamonds, ERank.Six),
+                new Card(ESuit.Diamonds, ERank.Three),
+                new Card(ESuit.Diamonds, ERank.Five),
             };
             Assert.AreNotEqual(EHandRanks.Straight, _badActualHand.CalculateHandRank());
         }
@@ -166,21 +166,21 @@ namespace Tests.PlayMode
 
             _goodActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.DIAMONDS, ERank.SIX),
-                new Card(ESuit.DIAMONDS, ERank.TWO),
-                new Card(ESuit.HEARTS, ERank.SIX),
-                new Card(ESuit.DIAMONDS, ERank.THREE),
-                new Card(ESuit.DIAMONDS, ERank.SIX),
+                new Card(ESuit.Diamonds, ERank.Six),
+                new Card(ESuit.Diamonds, ERank.Two),
+                new Card(ESuit.Hearts, ERank.Six),
+                new Card(ESuit.Diamonds, ERank.Three),
+                new Card(ESuit.Diamonds, ERank.Six),
             };
             Assert.AreEqual(EHandRanks.ThreeOfKind, _goodActualHand.CalculateHandRank());
             
             _badActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.DIAMONDS, ERank.SIX),
-                new Card(ESuit.DIAMONDS, ERank.SIX),
-                new Card(ESuit.HEARTS, ERank.THREE),
-                new Card(ESuit.DIAMONDS, ERank.TWO),
-                new Card(ESuit.DIAMONDS, ERank.THREE),
+                new Card(ESuit.Diamonds, ERank.Six),
+                new Card(ESuit.Diamonds, ERank.Six),
+                new Card(ESuit.Hearts, ERank.Three),
+                new Card(ESuit.Diamonds, ERank.Two),
+                new Card(ESuit.Diamonds, ERank.Three),
             };
             Assert.AreNotEqual(EHandRanks.ThreeOfKind, _badActualHand.CalculateHandRank());
         }
@@ -191,21 +191,21 @@ namespace Tests.PlayMode
 
             _goodActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.DIAMONDS, ERank.SIX),
-                new Card(ESuit.DIAMONDS, ERank.TWO),
-                new Card(ESuit.HEARTS, ERank.FOUR),
-                new Card(ESuit.DIAMONDS, ERank.TWO),
-                new Card(ESuit.DIAMONDS, ERank.SIX),
+                new Card(ESuit.Diamonds, ERank.Six),
+                new Card(ESuit.Diamonds, ERank.Two),
+                new Card(ESuit.Hearts, ERank.Four),
+                new Card(ESuit.Diamonds, ERank.Two),
+                new Card(ESuit.Diamonds, ERank.Six),
             };
             Assert.AreEqual(EHandRanks.TwoPair, _goodActualHand.CalculateHandRank());
             
             _badActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.DIAMONDS, ERank.SIX),
-                new Card(ESuit.DIAMONDS, ERank.TWO),
-                new Card(ESuit.HEARTS, ERank.FOUR),
-                new Card(ESuit.DIAMONDS, ERank.THREE),
-                new Card(ESuit.DIAMONDS, ERank.SIX),
+                new Card(ESuit.Diamonds, ERank.Six),
+                new Card(ESuit.Diamonds, ERank.Two),
+                new Card(ESuit.Hearts, ERank.Four),
+                new Card(ESuit.Diamonds, ERank.Three),
+                new Card(ESuit.Diamonds, ERank.Six),
             };
             Assert.AreNotEqual(EHandRanks.TwoPair, _badActualHand.CalculateHandRank());
         }
@@ -216,21 +216,21 @@ namespace Tests.PlayMode
 
             _goodActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.DIAMONDS, ERank.FOUR),
-                new Card(ESuit.DIAMONDS, ERank.TWO),
-                new Card(ESuit.HEARTS, ERank.SIX),
-                new Card(ESuit.DIAMONDS, ERank.THREE),
-                new Card(ESuit.DIAMONDS, ERank.SIX),
+                new Card(ESuit.Diamonds, ERank.Four),
+                new Card(ESuit.Diamonds, ERank.Two),
+                new Card(ESuit.Hearts, ERank.Six),
+                new Card(ESuit.Diamonds, ERank.Three),
+                new Card(ESuit.Diamonds, ERank.Six),
             };
             Assert.AreEqual(EHandRanks.OnePair, _goodActualHand.CalculateHandRank());
             
             _badActualHand.cards = new List<Card>()
             {
-                new Card(ESuit.DIAMONDS, ERank.SIX),
-                new Card(ESuit.DIAMONDS, ERank.TWO),
-                new Card(ESuit.HEARTS, ERank.FOUR),
-                new Card(ESuit.DIAMONDS, ERank.TWO),
-                new Card(ESuit.DIAMONDS, ERank.SIX),
+                new Card(ESuit.Diamonds, ERank.Six),
+                new Card(ESuit.Diamonds, ERank.Two),
+                new Card(ESuit.Hearts, ERank.Four),
+                new Card(ESuit.Diamonds, ERank.Two),
+                new Card(ESuit.Diamonds, ERank.Six),
             };
             Assert.AreNotEqual(EHandRanks.OnePair, _badActualHand.CalculateHandRank());
         }

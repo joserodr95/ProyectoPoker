@@ -1,7 +1,10 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+
+using hfn = HandFullName;
+using l10n = Helpers.LocalizationHelper;
 
 public class PokerManager : MonoBehaviour
 {
@@ -18,14 +21,13 @@ public class PokerManager : MonoBehaviour
     [SerializeField]
     public List<Player> players = new List<Player>();
 
-    [SerializeField]
-    public List<Button> buttons = new List<Button>();
-    
     [SerializeField] 
     internal bool revealCpuCards;
     
     [SerializeField]
     private bool infiniteDeck;
+    
+    private UserInput userInput;
 
 
     private void Start() {
@@ -35,6 +37,8 @@ public class PokerManager : MonoBehaviour
         {
             players.Add(new Player(i));
         }
+
+        userInput = GameObject.Find("UiManager").GetComponent<UserInput>();
 
         deck.FillBasicDeck();
         deck.Shuffle();
@@ -127,10 +131,56 @@ public class PokerManager : MonoBehaviour
         discartedCards.cards.Add(cardToAddToDiscard);
     }
     
-    public void CheckHandValue() {
+    public void CheckHandValue()
+    {
+        Dictionary<int, HandsCalculator.EHandRanks> playerHandRankDict 
+            = new Dictionary<int, HandsCalculator.EHandRanks>();
+
         for (int i = 0; i < 4; i++)
         {
-            Debug.Log($"Player {i+1}: {players[i].Hand.CalculateHandRank()}");
+            HandsCalculator.EHandRanks handRank = players[i].Hand.CalculateHandRank();
+            playerHandRankDict.Add(i, handRank);
+            Debug.Log($"{l10n.Get("Player", "Other")} {i+1}: {hfn.Get(players[i].Hand.cards, handRank)}");
+            userInput.playerMessages[i].text = $"{hfn.Get(players[i].Hand.cards, handRank)}";
+            userInput.playerMessages[i].enabled = true;
+            userInput.SetPlayerMessageStyle(i);
         }
+        
+        userInput.SetPlayerMessageStyle(DeclareWinner(playerHandRankDict), true);
+    }
+
+    private int DeclareWinner(Dictionary<int, HandsCalculator.EHandRanks> playerHandRankDict)
+    {
+        KeyValuePair<int, HandsCalculator.EHandRanks> bestHand = playerHandRankDict.ElementAt(0);
+        foreach (KeyValuePair<int, HandsCalculator.EHandRanks> kvp in playerHandRankDict.Skip(1))
+        {
+            if (kvp.Value > bestHand.Value)
+            {
+                bestHand = kvp;
+            }
+            else if (kvp.Value == bestHand.Value)
+            {
+                for (int i = players[kvp.Key].Hand.cards.Count-1; i >= 0; i--)
+                {
+                    Card playerCard = players[kvp.Key].Hand.cards[i];
+                    Card bestHandCard = players[bestHand.Key].Hand.cards[i];
+ 
+                    if (playerCard.rank > bestHandCard.rank)
+                    {
+                        bestHand = kvp;
+                        break;
+                    }
+                    if (playerCard.rank < bestHandCard.rank)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        l10n.UseTable("Other");
+        Debug.Log(
+            $"{l10n.Get("Winner")} {l10n.Get("Player")} {bestHand.Key + 1}. {hfn.Get(players[bestHand.Key].Hand.cards, bestHand.Value)}");
+        return bestHand.Key;
     }
 }

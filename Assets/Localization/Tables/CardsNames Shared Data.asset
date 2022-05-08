@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: CardsNames Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: CardsNames
+  m_TableCollectionNameGuidString: bcbaf51b59a46ec4f8cdfcfcbc79f76d
+  m_Entries:
+  - m_Id: 1598699909120
+    m_Key: Clubs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1899863519232
+    m_Key: Diamonds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3623022014464
+    m_Key: Hearts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3623038791680
+    m_Key: Spades
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12689215631360
+    m_Key: Two
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12689215631361
+    m_Key: Three
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12689215631362
+    m_Key: Four
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12689219825664
+    m_Key: Five
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12689219825665
+    m_Key: Six
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12689219825666
+    m_Key: Seven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12689219825667
+    m_Key: Eight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12689219825668
+    m_Key: Nine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12689219825669
+    m_Key: Ten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12689219825670
+    m_Key: Jack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12689219825671
+    m_Key: Queen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12689219825672
+    m_Key: King
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12689219825673
+    m_Key: Ace
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1651344014761

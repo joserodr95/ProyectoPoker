@@ -12,7 +12,7 @@ namespace DefaultNamespace
             DrawDefaultInspector();
 
             PokerManager myScript = (PokerManager)target;
-            if(GUILayout.Button("Check Hand Values"))
+            if(GUILayout.Button("Check Hand Values and Declare a Winner"))
             {
                 myScript.CheckHandValue();
             }

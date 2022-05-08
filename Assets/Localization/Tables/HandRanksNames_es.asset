@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: HandRanksNames_es
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: a0f854451e64d9649b42b801d2e04ad4, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 8584736768
+    m_Localized: Carta alta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380096
+    m_Localized: Pareja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380097
+    m_Localized: Doble pareja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380098
+    m_Localized: Trio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380099
+    m_Localized: Escalera
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380100
+    m_Localized: Color
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380101
+    m_Localized: Full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380102
+    m_Localized: Poker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380103
+    m_Localized: Escalera de color
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380104
+    m_Localized: Escalera real
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1

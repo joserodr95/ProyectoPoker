@@ -32,47 +32,61 @@ public class Card {
         this.name = this.ToString();
     }
 
+    public static bool operator<(Card left, Card right)
+    {
+        if (left.rank == right.rank) return left.suit < right.suit;
+
+        return left.rank < right.rank;
+    }
+
+    public static bool operator>(Card left, Card right)
+    {
+        if (left.rank == right.rank) return left.suit > right.suit;
+
+        return left.rank > right.rank;
+    }
+    
     public sealed override string ToString() {
         name = "";
 
         switch (rank) {
-            case ERank.TWO:
+            case ERank.Two:
                 name += 2;
                 break;
-            case ERank.THREE:
+            case ERank.Three:
                 name += 3;
                 break;
-            case ERank.FOUR:
+            case ERank.Four:
                 name += 4;
                 break;
-            case ERank.FIVE:
+            case ERank.Five:
                 name += 5;
                 break;
-            case ERank.SIX:
+            case ERank.Six:
                 name += 6;
                 break;
-            case ERank.SEVEN:
+            case ERank.Seven:
                 name += 7;
                 break;
-            case ERank.EIGHT:
+            case ERank.Eight:
                 name += 8;
                 break;
-            case ERank.NINE:
+            case ERank.Nine:
                 name += 9;
                 break;
-            case ERank.TEN:
+            case ERank.Ten:
                 name += 10;
                 break;
-            case ERank.JACK:
+            case ERank.Jack:
                 name += 11;
                 break;
-            case ERank.QUEEN:
+            case ERank.Queen:
                 name += 12;
                 break;
-            case ERank.KING:
+            case ERank.King:
                 name += 13;
                 break;
-            case ERank.AS:
+            case ERank.Ace:
                 name += 14;
                 break;
             default:
@@ -81,16 +95,16 @@ public class Card {
         }
 
         switch (suit) {
-            case ESuit.CLUBS:
+            case ESuit.Clubs:
                 name += "CL";
                 break;
-            case ESuit.DIAMONDS:
+            case ESuit.Diamonds:
                 name += "DI";
                 break;
-            case ESuit.HEARTS:
+            case ESuit.Hearts:
                 name += "HE";
                 break;
-            case ESuit.SPADES:
+            case ESuit.Spades:
                 name += "SP";
                 break;
             default:
@@ -103,23 +117,23 @@ public class Card {
 }
 
 public enum ESuit {
-    CLUBS       = 1,
-    DIAMONDS    = 2,
-    HEARTS      = 3,
-    SPADES      = 4,
+    Clubs       = 1,
+    Diamonds    = 2,
+    Hearts      = 3,
+    Spades      = 4,
 }
 public enum ERank {
-    TWO = 2,
-    THREE = 3,
-    FOUR = 4,
-    FIVE = 5,
-    SIX = 6,
-    SEVEN = 7,
-    EIGHT = 8,
-    NINE = 9,
-    TEN = 10,
-    JACK = 11,
-    QUEEN = 12,
-    KING = 13,
-    AS = 14
+    Two    = 2,
+    Three  = 3,
+    Four   = 4,
+    Five   = 5,
+    Six    = 6,
+    Seven  = 7,
+    Eight  = 8,
+    Nine   = 9,
+    Ten    = 10,
+    Jack   = 11,
+    Queen  = 12,
+    King   = 13,
+    Ace    = 14
 }

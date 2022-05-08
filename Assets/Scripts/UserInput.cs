@@ -1,12 +1,21 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+
 using static HandsCalculator;
 
 public class UserInput : MonoBehaviour {
 
-    public PokerManager pokerManager;
+    [SerializeField]
+    public List<Button> buttons = new List<Button>();
+    [SerializeField]
+    public List<TextMeshProUGUI> playerMessages = new List<TextMeshProUGUI>();
     
+    public PokerManager pokerManager;
+
     private Selectable seleccionable;
     private InGameCardInfo cardInfo;
     private bool controlable = true;
@@ -61,12 +70,31 @@ public class UserInput : MonoBehaviour {
         if(controlable) StartCoroutine(Discard());
     }
 
+    public void SetPlayerMessageStyle(int playerNum, bool winner = false)
+    {
+        if (winner)
+        {
+            TextMeshProUGUI winnerMsg = playerMessages[playerNum];
+            
+            winnerMsg.color = CustomColor.winnerVertexColor;
+            winnerMsg.enableVertexGradient = true;
+            winnerMsg.colorGradient = new VertexGradient(CustomColor.winnerGold, CustomColor.winnerGold, Color.white, Color.white);
+        }
+        else
+        {
+            TextMeshProUGUI winnerMsg = playerMessages[playerNum];
+            
+            winnerMsg.enableVertexGradient = false;
+            winnerMsg.color = Color.white;
+        }
+    }
+
     private IEnumerator Discard()
     {
-        pokerManager.buttons[0].interactable = controlable = false;
+        buttons[0].interactable = controlable = false;
         
         //Print the time of when the function is first called.
-        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+        // Debug.Log("Started Coroutine at timestamp : " + Time.time);
 
         for (int pNum = 0; pNum < pokerManager.players.Count; pNum++)
         {
@@ -75,14 +103,13 @@ public class UserInput : MonoBehaviour {
             
             yield return new WaitForSeconds(.5f);
             
-            Debug.Log("Finished WaitForSeconds at timestamp : " + Time.time);
+            // Debug.Log("Finished WaitForSeconds at timestamp : " + Time.time);
             
             if (pNum == 0) RealPlayerDiscard(player, ref pHand);
             else StartCoroutine(CpuPlayerDiscard(player, pHand));
         }
         
-
-        pokerManager.buttons[0].interactable = controlable = true;
+        buttons[0].interactable = controlable = true;
     }
 
     private void RealPlayerDiscard(Player player, ref CardsGroup pHand)

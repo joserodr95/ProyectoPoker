@@ -31,6 +31,6 @@ public class Player {
     public Player(int seat) {
         this.seat = seat;
         this.name = $"Player0{seat}";
-        cardsParent = GameObject.Find(name).transform;
+        cardsParent = GameObject.Find(name).transform.GetChild(0);
     }
 }

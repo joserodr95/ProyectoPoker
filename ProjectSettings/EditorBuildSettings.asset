@@ -11,4 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScenePoker.unity
     guid: 4f9f757ccf9dab74399752e136ae3acc
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 10afd43c92ce89748b71db5814d804ee, type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: 9335be0d6220bf14e9c38361ded59353, type: 2}

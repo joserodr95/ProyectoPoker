@@ -50,7 +50,7 @@ public static class HandsCalculator {
 
     private static bool CalculateRoyalStraightFlush(List<Card> cards)
     {
-        bool result = cards[0].rank == ERank.TEN && CalculateStraightFlush(cards);
+        bool result = cards[0].rank == ERank.Ten && CalculateStraightFlush(cards);
         ApplySignificance(ref cards);
         return result;
     }
@@ -62,7 +62,7 @@ public static class HandsCalculator {
             // If the value of the card's rank that is watching is not equal to
             // the value minus 1 of the next card's rank
             if ((int)cards[i].rank != (int)cards[i + 1].rank - 1) {
-                if (!(cards[i].rank == ERank.FIVE && cards[i + 1].rank == ERank.AS)) {
+                if (!(cards[i].rank == ERank.Five && cards[i + 1].rank == ERank.Ace)) {
                     return false;
                 }
             }
@@ -169,14 +169,14 @@ public static class HandsCalculator {
              * is not equal to the value minus 1 of the rank of the next card.
              */
             if ((int)cards[i].rank != (int)cards[i+1].rank - 1) {
-                if (!(cards[i].rank == ERank.FIVE && cards[i+1].rank == ERank.AS)) {
+                if (!(cards[i].rank == ERank.Five && cards[i+1].rank == ERank.Ace)) {
                     return false;
                 }
             }
 
         }
 
-        if (cards.Any(c => c.rank == ERank.AS) && cards[4].rank == ERank.AS)
+        if (cards.Any(c => c.rank == ERank.Ace) && cards[4].rank == ERank.Ace)
         {
             ApplySignificance(ref cards, 0, 1, 2, 3);
         }

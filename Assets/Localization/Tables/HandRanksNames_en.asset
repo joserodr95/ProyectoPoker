@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: HandRanksNames_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: a0f854451e64d9649b42b801d2e04ad4, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 8584736768
+    m_Localized: High card
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380096
+    m_Localized: One pair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380097
+    m_Localized: Two pair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380098
+    m_Localized: Three of kind
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380099
+    m_Localized: Straight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380100
+    m_Localized: Flush
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380101
+    m_Localized: Full house
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380102
+    m_Localized: Four of kind
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380103
+    m_Localized: Straight flush
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006885380104
+    m_Localized: Royal straight flush
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1
