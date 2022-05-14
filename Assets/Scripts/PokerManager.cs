@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 using hfn = HandFullName;
@@ -20,17 +19,16 @@ public class PokerManager : MonoBehaviour
 
     [SerializeField]
     public List<Player> players = new List<Player>();
-
-    [SerializeField] 
-    internal bool revealCpuCards;
     
-    [SerializeField]
-    private bool infiniteDeck;
+    internal int roundNumber = 1;
+    internal bool revealCpuCards;
+
+    private bool firstDeal = true;
     
     private UserInput userInput;
 
-
-    private void Start() {
+    private void Start()
+    {
         Instance = this;
         
         for (int i = 1; i <= 4; i++)
@@ -45,13 +43,22 @@ public class PokerManager : MonoBehaviour
         DealCards();
     }
 
-    private void OnValidate()
-    {
-        FlipCards();
-    }
+    /// <summary>
+    /// This function is called when the script is loaded or a value is changed in the Inspector (Called in the editor only).
+    /// You can use this to ensure that when you modify data in an editor, that data stays within a certain range.
+    /// </summary>
+    // private void OnValidate()
+    // {
+    //     FlipCards();
+    // }
 
-    private void FlipCards()
+    /// <summary>
+    /// It will flip down or up the cards.
+    /// </summary>
+    public void FlipCards()
     {
+        revealCpuCards = !revealCpuCards;
+        
         foreach (Player player in players)
         {
             foreach (CardComponent cc in player.ccHand)
@@ -65,42 +72,50 @@ public class PokerManager : MonoBehaviour
     public Card DrawFromTopOfDeck()
     {
         Card cardToDraw;
-
-        if (infiniteDeck)
-        {
-            if (deck.cards.Count <= 0)
-            {
-                discartedCards.Shuffle();
-                deck.cards = new List<Card>(discartedCards.cards);
-                discartedCards.cards = new List<Card>();
-            }
-        }
         
+        if (deck.cards.Count <= 0)
+        {
+            discartedCards.Shuffle();
+            deck.cards = new List<Card>(discartedCards.cards);
+            discartedCards.cards = new List<Card>();
+        }
+
         cardToDraw = deck.cards[0];
         deck.cards.RemoveAt(0);
 
         return cardToDraw;
     }
 
-    private void DealCards() {
-
+    public void DealCards() {
+        Debug.Log($"<b>{l10n.Get("Round", "Other")}: {roundNumber}</b>");
+        
         foreach (Player player in players) {
-            player.Hand = deck.DrawXCards(deck, 5);
+            player.Hand = deck.DrawXCards(5);
             for (int card = 0; card < 5; card++) {
                 DealCard(player, card);
             }
         }
+        
+        firstDeal = false;
     }
 
     private void DealCard(Player player, int indexAtHand) {
         Transform playerTransform = player.cardsParent.transform;
-        
-        GameObject cardGo = Instantiate(
-            CardPrefab,
-            playerTransform.position,
-            playerTransform.rotation,
-            player.cardsParent);
-        cardGo.transform.localPosition = player.cardsPositions[indexAtHand];
+        GameObject cardGo;
+
+        if (firstDeal)
+        {
+            cardGo = Instantiate(
+                CardPrefab,
+                playerTransform.position,
+                playerTransform.rotation,
+                player.cardsParent);
+            cardGo.transform.localPosition = player.cardsPositions[indexAtHand];
+        }
+        else
+        {
+            cardGo = player.ccHand[indexAtHand].gameObject;
+        }
         
         CardComponent cardComponent = cardGo.GetComponent<CardComponent>();
         player.ccHand.Add(cardComponent);
@@ -182,5 +197,29 @@ public class PokerManager : MonoBehaviour
         Debug.Log(
             $"{l10n.Get("Winner")} {l10n.Get("Player")} {bestHand.Key + 1}. {hfn.Get(players[bestHand.Key].Hand.cards, bestHand.Value)}");
         return bestHand.Key;
+    }
+    
+    internal void NewRound()
+    {
+        roundNumber++;
+        FlipCards();
+        userInput.ResetPlayerMessages();
+        EndOfRoundDiscard();
+        DealCards();
+    }
+
+    /// <summary>
+    /// Add the cards in the hard of each player to the discard pile.
+    /// This method is called just before the hands are dealt to the players (after the 1st round).
+    /// </summary>
+    public void EndOfRoundDiscard()
+    {
+        foreach (Player player in players)
+        {
+            foreach (Card card in player.Hand.cards)
+            {
+                AddToDiscardPile(card);
+            }
+        }
     }
 }

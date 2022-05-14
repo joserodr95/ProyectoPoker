@@ -36,6 +36,10 @@ MonoBehaviour:
     m_Localized: LA MEJOR MANO DEL JUEGO
     m_Metadata:
       m_Items: []
+  - m_Id: 4346957450489856
+    m_Localized: Ronda
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:

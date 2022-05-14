@@ -89,6 +89,18 @@ public class UserInput : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Disables all the player messages and set them the default white style.
+    /// </summary>
+    internal void ResetPlayerMessages()
+    {
+        for (int i = 0; i < playerMessages.Count; i++)
+        {
+            playerMessages[i].enabled = false;
+            SetPlayerMessageStyle(i);
+        }
+    }
+
     private IEnumerator Discard()
     {
         buttons[0].interactable = controlable = false;
@@ -100,15 +112,21 @@ public class UserInput : MonoBehaviour {
         {
             Player player = pokerManager.players[pNum];
             CardsGroup pHand = player.Hand;
-            
-            yield return new WaitForSeconds(.5f);
-            
+
             // Debug.Log("Finished WaitForSeconds at timestamp : " + Time.time);
             
             if (pNum == 0) RealPlayerDiscard(player, ref pHand);
             else StartCoroutine(CpuPlayerDiscard(player, pHand));
+            
+            yield return new WaitForSeconds(.5f);
         }
         
+        pokerManager.CheckHandValue();
+        pokerManager.FlipCards();
+        
+        yield return new WaitForSeconds(4f);
+        
+        pokerManager.NewRound();
         buttons[0].interactable = controlable = true;
     }
 

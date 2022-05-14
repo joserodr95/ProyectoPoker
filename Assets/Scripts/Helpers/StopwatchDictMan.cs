@@ -41,11 +41,7 @@ namespace Helpers
         public static void End(string id, bool debug = true)
         {
             dict[id].Stop();
-            if (debug)
-            {
-                UnityEngine.Debug.Log(id + " ms: " + dict[id].ElapsedMilliseconds + "\n"
-                                      + id + " ticks: " + dict[id].ElapsedTicks);
-            }
+            if (debug) UnityEngine.Debug.Log($"{id} ms: {dict[id].ElapsedMilliseconds}, ticks: {dict[id].ElapsedTicks}");
         }
 
         /// <summary>

@@ -565,7 +565,7 @@ MonoBehaviour:
   discartedCards:
     cards: []
   players: []
-  revealCpuCards: 1
+  revealCpuCards: 0
   infiniteDeck: 1
 --- !u!1 &841919457
 GameObject:

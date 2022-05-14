@@ -36,12 +36,14 @@ public class CardsGroup : IEnumerable, IComparer<Card> {
     /// <summary>
     /// Remove a number of cards and returns them.
     /// </summary>
+    /// <param name="nCardsToDraw">The number of cards to draw.</param>
     /// <returns>The removed cards as a CardsGroup.</returns>
-    public CardsGroup DrawXCards(CardsGroup drawingPile, int nCardsToDraw) {
-        CardsGroup drawnCards = new CardsGroup {
-            cards = drawingPile.cards.GetRange(0, nCardsToDraw)
-        };
-        drawingPile.cards.RemoveRange(0, nCardsToDraw);
+    public CardsGroup DrawXCards(int nCardsToDraw) {
+        CardsGroup drawnCards = new CardsGroup();
+        for (int i = 0; i < nCardsToDraw; i++)
+        {
+            drawnCards.cards.Add(PokerManager.Instance.DrawFromTopOfDeck());
+        }
 
         return drawnCards;
     }
