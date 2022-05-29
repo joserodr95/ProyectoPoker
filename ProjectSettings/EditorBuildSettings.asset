@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/MainSceneSolitaire.unity
-    guid: 906ced7d4fa6b79459e8ca1b07c84083
   - enabled: 1
     path: Assets/Scenes/MainScenePoker.unity
     guid: 4f9f757ccf9dab74399752e136ae3acc

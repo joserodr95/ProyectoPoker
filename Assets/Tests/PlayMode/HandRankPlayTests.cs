@@ -43,9 +43,19 @@ namespace Tests.PlayMode
             {
                 new Card(ESuit.Hearts, ERank.Two),
                 new Card(ESuit.Hearts, ERank.Ace),
-                new Card(ESuit.Hearts, ERank.Five),
                 new Card(ESuit.Hearts, ERank.Four),
+                new Card(ESuit.Hearts, ERank.Five),
                 new Card(ESuit.Hearts, ERank.Three),
+            };
+            Assert.AreEqual(EHandRanks.StraightFlush, _goodActualHand.CalculateHandRank());
+            
+            _goodActualHand.cards = new List<Card>()
+            {
+                new Card(ESuit.Hearts, ERank.Seven),
+                new Card(ESuit.Hearts, ERank.Six),
+                new Card(ESuit.Hearts, ERank.Ten),
+                new Card(ESuit.Hearts, ERank.Nine),
+                new Card(ESuit.Hearts, ERank.Eight),
             };
             Assert.AreEqual(EHandRanks.StraightFlush, _goodActualHand.CalculateHandRank());
             
@@ -56,6 +66,16 @@ namespace Tests.PlayMode
                 new Card(ESuit.Clubs, ERank.Ten),
                 new Card(ESuit.Clubs, ERank.King),
                 new Card(ESuit.Clubs, ERank.Queen),
+            };
+            Assert.AreNotEqual(EHandRanks.StraightFlush, _badActualHand.CalculateHandRank());
+            
+            _badActualHand.cards = new List<Card>()
+            {
+                new Card(ESuit.Clubs, ERank.Queen),
+                new Card(ESuit.Clubs, ERank.King),
+                new Card(ESuit.Clubs, ERank.Ace),
+                new Card(ESuit.Clubs, ERank.Two),
+                new Card(ESuit.Clubs, ERank.Three),
             };
             Assert.AreNotEqual(EHandRanks.StraightFlush, _badActualHand.CalculateHandRank());
         }
@@ -235,6 +255,7 @@ namespace Tests.PlayMode
             Assert.AreNotEqual(EHandRanks.OnePair, _badActualHand.CalculateHandRank());
         }
         
+        // Makes it work correctly in PlayMode
         [UnityTest]
         public IEnumerator HandRankTestsWithEnumeratorPasses()
         {

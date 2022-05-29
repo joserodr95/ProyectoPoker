@@ -1,5 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Helpers;
+using UnityEngine;
+
+using l10n = Helpers.LocalizationHelper;
+using hfn = HandFullName;
 
 public static class HandsCalculator {
 
@@ -60,20 +66,26 @@ public static class HandsCalculator {
 
         for (int i = 0; i < cards.Count - 1; i++) {
             // If the value of the card's rank that is watching is not equal to
-            // the value minus 1 of the next card's rank
+            // the value minus 1 of the next card's rank.
+            // Except if there is a five followed by an Ace.
             if ((int)cards[i].rank != (int)cards[i + 1].rank - 1) {
-                if (!(cards[i].rank == ERank.Five && cards[i + 1].rank == ERank.Ace)) {
+                if (!(cards[i].rank == ERank.Five && cards[i + 1].rank == ERank.Ace))
+                {
                     return false;
                 }
             }
 
-            // If the suit of the next card is the suit that should be
+            // If the suit of the next card is the suit that shouldn't be. Then returns false.
             if (cards[i + 1].suit != s) {
                 return false;
             }
         }
+        
+        if (cards[cards.Count-2].rank == ERank.Five && cards[cards.Count-1].rank == ERank.Ace) 
+            ApplySignificance(ref cards, 0, 1, 2, 3); 
+        else 
+            ApplySignificance(ref cards);
 
-        ApplySignificance(ref cards);
         return true;
     }
 
@@ -82,7 +94,7 @@ public static class HandsCalculator {
          * Calculates how many repetitions of the rank of the first card there is
          * if there is 4 of them returns true else tries the same with the second card. 
          * 
-         * Since the hand is sorted and the total size of a hand is one more card
+         * Since the hand is sorted and the total size of a hand is handRank more card
          * than in a four of kind, the first card of the group of equal cards
          * that form the four of kind will be either in the first or second position.
 		 */
@@ -164,10 +176,9 @@ public static class HandsCalculator {
 
     private static bool CalculateStraight(List<Card> cards) {
         for (int i = 0; i < cards.Count-1; i++) {
-            /*
-             * If the value of the rank of the card that is looking at
-             * is not equal to the value minus 1 of the rank of the next card.
-             */
+            // If the value of the card's rank that is watching is not equal to
+            // the value minus 1 of the next card's rank.
+            // Except if there is a five followed by an Ace.
             if ((int)cards[i].rank != (int)cards[i+1].rank - 1) {
                 if (!(cards[i].rank == ERank.Five && cards[i+1].rank == ERank.Ace)) {
                     return false;
@@ -176,14 +187,10 @@ public static class HandsCalculator {
 
         }
 
-        if (cards.Any(c => c.rank == ERank.Ace) && cards[4].rank == ERank.Ace)
-        {
-            ApplySignificance(ref cards, 0, 1, 2, 3);
-        }
-        else
-        {
-            ApplySignificance(ref cards);    
-        }
+        if (cards[cards.Count-2].rank == ERank.Five && cards[cards.Count-1].rank == ERank.Ace) 
+            ApplySignificance(ref cards, 0, 1, 2, 3); 
+        else 
+            ApplySignificance(ref cards);
 
         return true;
     }
@@ -251,6 +258,53 @@ public static class HandsCalculator {
         {
             cards[idx].hasSignificance = true;
         }
+    }
+
+    public class RankCardsTuple : Tuple<EHandRanks, List<Card>>
+    {
+        public RankCardsTuple(EHandRanks handRank, List<Card> cards) : base(handRank, cards) { }
+
+        public EHandRanks HandRank => Item1;
+        public List<Card> Cards => Item2;
+    }
+    
+    public static int DeclareWinner(Dictionary<int, RankCardsTuple> dictHands, bool log = true)
+    {
+        KeyValuePair<int, RankCardsTuple> bestHand = dictHands.ElementAt(0);
+        foreach (KeyValuePair<int, RankCardsTuple> kvp in dictHands.Skip(1))
+        {
+            if (kvp.Value.HandRank > bestHand.Value.HandRank)
+            {
+                bestHand = kvp;
+            }
+            else if (kvp.Value.HandRank == bestHand.Value.HandRank)
+            {
+                for (int i = kvp.Value.Cards.Count-1; i >= 0; i--)
+                {
+                    Card playerCard = kvp.Value.Cards[i];
+                    Card bestHandCard = bestHand.Value.Cards[i];
+            
+                    if (playerCard.rank > bestHandCard.rank)
+                    {
+                        bestHand = kvp;
+                        break;
+                    }
+                    if (playerCard.rank < bestHandCard.rank)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (log)
+        {
+            l10n.UseTable("Other");
+            Debug.Log(
+                $"<color=#{ColorUtility.ToHtmlStringRGBA(CustomColor.winnerGold)}>{l10n.Get("Winner")} {l10n.Get("Player")} {bestHand.Key + 1}. {hfn.Get(bestHand.Value.Cards, bestHand.Value.HandRank)}</color>");
+        }
+        
+        return bestHand.Key;
     }
 }
 

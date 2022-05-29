@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1257557896}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &461059082
@@ -565,8 +565,6 @@ MonoBehaviour:
   discartedCards:
     cards: []
   players: []
-  revealCpuCards: 0
-  infiniteDeck: 1
 --- !u!1 &841919457
 GameObject:
   m_ObjectHideFlags: 0

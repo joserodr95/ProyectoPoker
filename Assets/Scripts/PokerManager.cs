@@ -44,15 +44,6 @@ public class PokerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// This function is called when the script is loaded or a value is changed in the Inspector (Called in the editor only).
-    /// You can use this to ensure that when you modify data in an editor, that data stays within a certain range.
-    /// </summary>
-    // private void OnValidate()
-    // {
-    //     FlipCards();
-    // }
-
-    /// <summary>
     /// It will flip down or up the cards.
     /// </summary>
     public void FlipCards()
@@ -145,60 +136,25 @@ public class PokerManager : MonoBehaviour
         Card cardToAddToDiscard = new Card(cardValuesToDiscard.suit, cardValuesToDiscard.rank);
         discartedCards.cards.Add(cardToAddToDiscard);
     }
-    
+
     public void CheckHandValue()
     {
-        Dictionary<int, HandsCalculator.EHandRanks> playerHandRankDict 
-            = new Dictionary<int, HandsCalculator.EHandRanks>();
+        Dictionary<int, HandsCalculator.RankCardsTuple> playerHandRankDict 
+            = new Dictionary<int, HandsCalculator.RankCardsTuple>();
 
         for (int i = 0; i < 4; i++)
         {
             HandsCalculator.EHandRanks handRank = players[i].Hand.CalculateHandRank();
-            playerHandRankDict.Add(i, handRank);
+            playerHandRankDict.Add(i, new HandsCalculator.RankCardsTuple(handRank, players[i].Hand.cards));
             Debug.Log($"{l10n.Get("Player", "Other")} {i+1}: {hfn.Get(players[i].Hand.cards, handRank)}");
             userInput.playerMessages[i].text = $"{hfn.Get(players[i].Hand.cards, handRank)}";
             userInput.playerMessages[i].enabled = true;
             userInput.SetPlayerMessageStyle(i);
         }
         
-        userInput.SetPlayerMessageStyle(DeclareWinner(playerHandRankDict), true);
+        userInput.SetPlayerMessageStyle(HandsCalculator.DeclareWinner(playerHandRankDict), true);
     }
 
-    private int DeclareWinner(Dictionary<int, HandsCalculator.EHandRanks> playerHandRankDict)
-    {
-        KeyValuePair<int, HandsCalculator.EHandRanks> bestHand = playerHandRankDict.ElementAt(0);
-        foreach (KeyValuePair<int, HandsCalculator.EHandRanks> kvp in playerHandRankDict.Skip(1))
-        {
-            if (kvp.Value > bestHand.Value)
-            {
-                bestHand = kvp;
-            }
-            else if (kvp.Value == bestHand.Value)
-            {
-                for (int i = players[kvp.Key].Hand.cards.Count-1; i >= 0; i--)
-                {
-                    Card playerCard = players[kvp.Key].Hand.cards[i];
-                    Card bestHandCard = players[bestHand.Key].Hand.cards[i];
- 
-                    if (playerCard.rank > bestHandCard.rank)
-                    {
-                        bestHand = kvp;
-                        break;
-                    }
-                    if (playerCard.rank < bestHandCard.rank)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
-
-        l10n.UseTable("Other");
-        Debug.Log(
-            $"{l10n.Get("Winner")} {l10n.Get("Player")} {bestHand.Key + 1}. {hfn.Get(players[bestHand.Key].Hand.cards, bestHand.Value)}");
-        return bestHand.Key;
-    }
-    
     internal void NewRound()
     {
         roundNumber++;
