@@ -109,7 +109,7 @@ public class PokerManager : MonoBehaviour
         }
         
         CardComponent cardComponent = cardGo.GetComponent<CardComponent>();
-        player.ccHand.Add(cardComponent);
+        if (firstDeal) player.ccHand.Add(cardComponent);
         cardComponent.card = player.Hand.cards[indexAtHand];
         cardComponent.name = player.Hand.cards[indexAtHand].ToString();
         cardComponent.gameObject.name = player.Hand.cards[indexAtHand].ToString();
