@@ -40,6 +40,10 @@ MonoBehaviour:
     m_Localized: Ronda
     m_Metadata:
       m_Items: []
+  - m_Id: 11978738819444736
+    m_Localized: Bote
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:

@@ -35,6 +35,10 @@ MonoBehaviour:
     m_Key: Round
     m_Metadata:
       m_Items: []
+  - m_Id: 11978738819444736
+    m_Key: Jackpot
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
