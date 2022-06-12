@@ -29,8 +29,7 @@ public class PokerManager : MonoBehaviour
         Instance = this;
 
         for (int i = 1; i <= 4; i++) players.Add(new Player(i));
-
-        Debug.Log($"SceneManager.GetActiveScene().name = {SceneManager.GetActiveScene().name}");
+        
         if (SceneManager.GetActiveScene().name == "PokerLevel1")
         {
             deck.FillsDeck(true);
