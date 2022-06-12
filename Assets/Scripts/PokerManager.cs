@@ -21,6 +21,7 @@ public class PokerManager : MonoBehaviour
     private bool firstDeal = true;
 
     [SerializeField] private UserInput userInput;
+    [SerializeField] private FinalState finalState;
 
     private void Start()
     {
@@ -160,6 +161,8 @@ public class PokerManager : MonoBehaviour
         BettingManager.Instance.ResetTotalBetted();
         EndOfRoundDiscard();
         foreach (Player player in players) player.IsFolding = false;
+        if (players[0].Eliminated) finalState.EndGame(FinalState.EState.Lose);
+        else if (players[1].Eliminated && players[2].Eliminated && players[3].Eliminated) finalState.EndGame(FinalState.EState.Win);
         DealCards();
     }
 

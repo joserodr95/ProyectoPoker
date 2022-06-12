@@ -39,6 +39,34 @@ MonoBehaviour:
     m_Key: Jackpot
     m_Metadata:
       m_Items: []
+  - m_Id: 14785255985688576
+    m_Key: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14785321714626560
+    m_Key: English
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14785389058371584
+    m_Key: Spanish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14785439595540480
+    m_Key: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14786133320839168
+    m_Key: CurrentLanguage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14818725717913600
+    m_Key: YouWin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14818827073269760
+    m_Key: YouLose
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
