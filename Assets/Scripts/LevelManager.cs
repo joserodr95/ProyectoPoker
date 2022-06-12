@@ -3,7 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    public void GoToLevel(string levelName)
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+    }
+    
+    public static void GoToLevel(string levelName)
     {
         SceneManager.LoadScene($"PokerLevel{levelName}", LoadSceneMode.Single);
     }

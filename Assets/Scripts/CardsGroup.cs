@@ -14,13 +14,14 @@ public class CardsGroup : IEnumerable, IComparer<Card> {
     private Random rng = new Random();
 
     /// <summary>
-    /// Rellena un ConjuntoCartas con el mazo básico de 52 naipes.
+    /// Fills the deck.
     /// </summary>
-    public void FillBasicDeck() {
-        foreach (ESuit p in Enum.GetValues(typeof(ESuit))) {
+    public void FillsDeck(bool omitStars = true) {
+        foreach (ESuit s in Enum.GetValues(typeof(ESuit))) {
+            if (omitStars && s == ESuit.Stars) continue;
             foreach (ERank r in Enum.GetValues(typeof(ERank)))
             {
-                Card carta = new Card(p, r);
+                Card carta = new Card(s, r);
                 this.cards.Add(carta);
             }
         }

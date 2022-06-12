@@ -5,6 +5,7 @@ using System.Linq;
 using Helpers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 using static HandsCalculator;
@@ -74,6 +75,7 @@ public class UserInput : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape)) SceneManager.LoadScene("LevelSelector", LoadSceneMode.Single);
         GetMouseClick();
     }
 

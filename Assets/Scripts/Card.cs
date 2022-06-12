@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Class that holds the main info about a card.
+/// </summary>
 [System.Serializable]
 public class Card {
     
@@ -16,20 +19,24 @@ public class Card {
         this.rank = card.rank;
         this.hasSignificance = card.hasSignificance;
     }
+    
+    public Card(ESuit suit, ERank rank, bool hasSignificance = false) {
+        this.suit = suit;
+        this.rank = rank;
+        this.hasSignificance = hasSignificance;
+        this.name = this.ToString();
+    }
 
+    /// <summary>
+    /// Updates the values of card.
+    /// </summary>
+    /// <param name="cardWithNewValues">The card that has the new values that will be passed.</param>
     public void UpdateCardValues(Card cardWithNewValues)
     {
         this.name = cardWithNewValues.name;
         this.suit = cardWithNewValues.suit;
         this.rank = cardWithNewValues.rank;
         this.hasSignificance = cardWithNewValues.hasSignificance;
-    }
-
-    public Card(ESuit suit, ERank rank, bool hasSignificance = false) {
-        this.suit = suit;
-        this.rank = rank;
-        this.hasSignificance = hasSignificance;
-        this.name = this.ToString();
     }
 
     public static bool operator<(Card left, Card right)
@@ -124,8 +131,9 @@ public enum ESuit {
     Diamonds    = 2,
     Hearts      = 3,
     Spades      = 4,
-    Stars      = 5,
+    Stars       = 5,
 }
+
 public enum ERank {
     Two    = 2,
     Three  = 3,
