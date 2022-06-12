@@ -107,6 +107,9 @@ public class Card {
             case ESuit.Spades:
                 name += "SP";
                 break;
+            case ESuit.Stars:
+                name += "ST";
+                break;
             default:
                 Debug.LogError("Suit not implemented.");
                 break;
@@ -121,6 +124,7 @@ public enum ESuit {
     Diamonds    = 2,
     Hearts      = 3,
     Spades      = 4,
+    Stars      = 5,
 }
 public enum ERank {
     Two    = 2,
