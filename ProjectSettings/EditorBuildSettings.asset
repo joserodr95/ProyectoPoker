@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PokerLevel2.unity
     guid: d5d328256e275774d85a3d28f0a410be
+  - enabled: 1
+    path: Assets/Scenes/PokerLevel3.unity
+    guid: f86859d72870f354394c9bb1413eb1e1
+  - enabled: 1
+    path: Assets/Scenes/PokerLevel4.unity
+    guid: 865f3c8ace77aee49b4522014dab1d0f
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 10afd43c92ce89748b71db5814d804ee, type: 2}
     com.unity.localization.settings: {fileID: 11400000, guid: 9335be0d6220bf14e9c38361ded59353, type: 2}

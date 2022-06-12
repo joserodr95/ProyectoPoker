@@ -30,11 +30,11 @@ public class PokerManager : MonoBehaviour
 
         for (int i = 1; i <= 4; i++) players.Add(new Player(i));
         
-        if (SceneManager.GetActiveScene().name == "PokerLevel1")
+        if (SceneManager.GetActiveScene().name == "PokerLevel1" || SceneManager.GetActiveScene().name == "PokerLevel3")
         {
             deck.FillsDeck(true);
         }
-        else if (SceneManager.GetActiveScene().name == "PokerLevel2")
+        if (SceneManager.GetActiveScene().name == "PokerLevel2" || SceneManager.GetActiveScene().name == "PokerLevel4")
         {
             deck.FillsDeck(false);
         }
